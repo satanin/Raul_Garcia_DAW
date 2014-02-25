@@ -3,12 +3,14 @@ import java.io.Serializable;
 
 
 public class Equipo implements Serializable{
-private String nombreEquipo;
-private int golesFavor;
-private int golesEnContra;
-private int partidosGanados;
-private int partidosPerdidos;
+	//declaro todas las variables que voy a necesitar
+	private String nombreEquipo;
+	private int golesFavor;
+	private int golesEnContra;
+	private int partidosGanados;
+	private int partidosPerdidos;
 
+	// constructor, le paso diferentes argumentos.
 	public Equipo(String miEquipo, int misGolesFavor, int misGolesEnContra, int misPartidosGanados, int misPartidosPerdidos) {
 		
 		nombreEquipo = miEquipo;
@@ -18,7 +20,7 @@ private int partidosPerdidos;
 		partidosPerdidos = misPartidosPerdidos;
 		
 	}
-
+	// Getters y Setters, los he generado automáticamente con eclipse.
 	public String getNombreEquipo() {
 		return nombreEquipo;
 	}

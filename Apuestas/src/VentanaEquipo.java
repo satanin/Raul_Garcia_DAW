@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 public class VentanaEquipo extends JFrame {
 
 	private JPanel contentPane;
+	// defino los items y variables que voy a necesitar luego
 	private JTextField nombreEquipo;
 	private JTextField golesAFavor;
 	private JTextField golesEnContra;
@@ -24,15 +25,9 @@ public class VentanaEquipo extends JFrame {
 	private Equipo equipo;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-
-	}
-
-	/**
 	 * Create the frame.
 	 */
+	// Modifico el constructor para poder ponerle como parámetro o argumento el objeto de clase Equipo
 	public VentanaEquipo(Equipo equipoAModificar) {
 		setTitle("Guardar Equipos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,12 +85,14 @@ public class VentanaEquipo extends JFrame {
 		JButton btnGuardarEquipo = new JButton("Guardar Equipo");
 		btnGuardarEquipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				// Asigno a cada variable del objeto equipo un valor que obtengo de la ventana.
 				equipo.setNombreEquipo(nombreEquipo.getText());
 				equipo.setGolesFavor(Integer.valueOf(golesAFavor.getText()));
 				equipo.setGolesEnContra(Integer.valueOf(golesEnContra.getText()));
 				equipo.setPartidosGanados(Integer.valueOf(partidosGanados.getText()));
 				equipo.setPartidosPerdidos(Integer.valueOf(partidosPerdidos.getText()));
 				
+				// Llamo al método guardar en fichero.
 				guardarEnFichero();
 			}
 		});
