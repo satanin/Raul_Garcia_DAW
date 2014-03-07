@@ -9,6 +9,7 @@ public class Equipo implements Serializable{
 	private int golesEnContra;
 	private int partidosGanados;
 	private int partidosPerdidos;
+	private String escudoEquipo;
 	
 
 	// constructor, le paso diferentes argumentos.
@@ -19,6 +20,7 @@ public class Equipo implements Serializable{
 		golesEnContra = misGolesEnContra;
 		partidosGanados = misPartidosGanados;
 		partidosPerdidos = misPartidosPerdidos;
+		escudoEquipo = nombreEquipo;
 		
 	}
 	
