@@ -9,6 +9,7 @@ public class Equipo implements Serializable{
 	private int golesEnContra;
 	private int partidosGanados;
 	private int partidosPerdidos;
+	
 
 	// constructor, le paso diferentes argumentos.
 	public Equipo(String miEquipo, int misGolesFavor, int misGolesEnContra, int misPartidosGanados, int misPartidosPerdidos) {
@@ -18,6 +19,26 @@ public class Equipo implements Serializable{
 		golesEnContra = misGolesEnContra;
 		partidosGanados = misPartidosGanados;
 		partidosPerdidos = misPartidosPerdidos;
+		
+	}
+	
+	public Equipo() {
+		
+		nombreEquipo = "";
+		golesFavor = 0;
+		golesEnContra = 0;
+		partidosGanados = 0;
+		partidosPerdidos = 0;
+		
+	}
+	
+	public Equipo(String nombreEquipo) {
+		
+		this.nombreEquipo = nombreEquipo;
+		golesFavor = 0;
+		golesEnContra = 0;
+		partidosGanados = 0;
+		partidosPerdidos = 0;
 		
 	}
 	// Getters y Setters, los he generado automáticamente con eclipse.
