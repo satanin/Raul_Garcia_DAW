@@ -14,11 +14,11 @@ public class Liga {
 		this.nombreLiga = "Liga Española";
 		// Establecemos número de equipos.
 		this.numEquipos = 20;
-		// Aquí establecemos el tamaño de la liga y reservamos ya el espacio de 20 items Equipo en el array miLiga.
+		// Aquí establecemos el tamaño de la liga y reservamos ya el espacio de 20 items Equipo en el ArrayList miLiga.
 		// miLiga = new Equipo[this.numEquipos];
 		// Aquí un poco de texto, para saber que vamos haciendo
 		System.out.println("Rellenando Equipos de Liga");
-		// Ahora vamos a rellenar el array ligas con objetos equipo, para que ya se pueda trabajar con ellos.
+		// Ahora vamos a rellenar el ArrayList liga con objetos equipo, para que ya se pueda trabajar con ellos.
 		for (int i=0;i<this.numEquipos;i++){			
 			// Aquí muestro el equipo que voy a añadir por consola
 			System.out.println("Anadiendo al "+equiposEspana[i]+" a la liga Española");
