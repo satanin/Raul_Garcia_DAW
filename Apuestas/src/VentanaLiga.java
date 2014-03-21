@@ -41,7 +41,7 @@ public class VentanaLiga extends JFrame {
 		});
 		setTitle("Crear Liga");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 289, 200);
+		setBounds(100, 100, 289, 194);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -66,23 +66,23 @@ public class VentanaLiga extends JFrame {
 				
 			}
 		});
-		btnGuardarLiga.setBounds(10, 127, 256, 23);
+		btnGuardarLiga.setBounds(10, 130, 256, 23);
 		contentPane.add(btnGuardarLiga);
 		
 		comboBox = new JComboBox<String>();
 		comboBox.setBounds(10, 62, 256, 20);
 		contentPane.add(comboBox);
 		
-		JButton btnNewButton = new JButton("Editar Equipo Liga");
+		JButton btnNewButton = new JButton("Editar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				VentanaEquipo frame = new VentanaEquipo(nuevaLiga.getEquipo(comboBox.getSelectedIndex()));
+				VentanaEquipo frame = new VentanaEquipo(nuevaLiga,comboBox.getSelectedIndex());
 				frame.setVisible(true);
 				
 			}
 		});
-		btnNewButton.setBounds(10, 93, 256, 23);
+		btnNewButton.setBounds(10, 93, 117, 23);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNEquipos = new JLabel("N\u00BA Equipos");
@@ -93,6 +93,20 @@ public class VentanaLiga extends JFrame {
 		numEquipos.setBounds(236, 31, 30, 20);
 		contentPane.add(numEquipos);
 		numEquipos.setColumns(10);
+		
+		JButton btnEliminarEquipoLiga = new JButton("+");
+		btnEliminarEquipoLiga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaEquipo frame = new VentanaEquipo(nuevaLiga,-1);
+				frame.setVisible(true);
+			}
+		});
+		btnEliminarEquipoLiga.setBounds(137, 93, 57, 23);
+		contentPane.add(btnEliminarEquipoLiga);
+		
+		JButton button = new JButton("-");
+		button.setBounds(204, 93, 59, 23);
+		contentPane.add(button);
 		
 		nuevaLiga = miLiga;
 	}

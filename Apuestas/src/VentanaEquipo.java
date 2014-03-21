@@ -30,13 +30,21 @@ public class VentanaEquipo extends JFrame {
 	private JTextField partidosGanados;
 	private JTextField partidosPerdidos;
 	private Equipo equipo;
+	private Liga miLiga;
 
 	/**
 	 * Create the frame.
 	 */
 	// Modifico el constructor para poder ponerle como parámetro o argumento el objeto de clase Equipo
-	public VentanaEquipo(Equipo equipoAModificar) {
+	public VentanaEquipo(Liga ligaAModificar, int miEquipo) {
+		miLiga = ligaAModificar;
+		this.equipo = miLiga.addEquipo();
+		
+		if (miEquipo>-1){
+			this.equipo = miLiga.getEquipo(miEquipo);
+			nombreEquipo.setEditable(false);
 		addWindowListener(new WindowAdapter() {
+			
 			@Override
 			public void windowOpened(WindowEvent arg0) {
 				nombreEquipo.setText(equipo.getNombreEquipo());
@@ -46,6 +54,8 @@ public class VentanaEquipo extends JFrame {
 				partidosPerdidos.setText(String.valueOf(equipo.getPartidosPerdidos()));
 			}
 		});
+		}
+		
 		setTitle("Guardar Equipos");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 290, 279);
@@ -60,7 +70,6 @@ public class VentanaEquipo extends JFrame {
 		contentPane.add(lblNombreEquipo);
 		
 		nombreEquipo = new JTextField();
-		nombreEquipo.setEditable(false);
 		nombreEquipo.setBounds(109, 8, 152, 20);
 		contentPane.add(nombreEquipo);
 		nombreEquipo.setColumns(10);
@@ -110,10 +119,10 @@ public class VentanaEquipo extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// Asigno a cada variable del objeto equipo un valor que obtengo de la ventana.
 				equipo.setNombreEquipo(nombreEquipo.getText());
-				equipo.setGolesFavor(Integer.valueOf(golesAFavor.getText()));
-				equipo.setGolesEnContra(Integer.valueOf(golesEnContra.getText()));
-				equipo.setPartidosGanados(Integer.valueOf(partidosGanados.getText()));
-				equipo.setPartidosPerdidos(Integer.valueOf(partidosPerdidos.getText()));
+				equipo.setGolesFavor(Integer.valueOf("0"+ golesAFavor.getText()));
+				equipo.setGolesEnContra(Integer.valueOf("0"+golesEnContra.getText()));
+				equipo.setPartidosGanados(Integer.valueOf("0"+partidosGanados.getText()));
+				equipo.setPartidosPerdidos(Integer.valueOf("0"+partidosPerdidos.getText()));
 				
 				// Llamo al método guardar en fichero.
 				// guardarEnFichero();
@@ -126,11 +135,11 @@ public class VentanaEquipo extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				equipo.setNombreEquipo(nombreEquipo.getText());
-				equipo.setGolesFavor(Integer.valueOf(golesAFavor.getText()));
-				equipo.setGolesEnContra(Integer.valueOf(golesEnContra.getText()));
-				equipo.setPartidosGanados(Integer.valueOf(partidosGanados.getText()));
-				equipo.setPartidosPerdidos(Integer.valueOf(partidosPerdidos.getText()));
+				equipo.setNombreEquipo(""+nombreEquipo.getText());
+				equipo.setGolesFavor(Integer.valueOf("0"+golesAFavor.getText()));
+				equipo.setGolesEnContra(Integer.valueOf("0"+golesEnContra.getText()));
+				equipo.setPartidosGanados(Integer.valueOf("0"+partidosGanados.getText()));
+				equipo.setPartidosPerdidos(Integer.valueOf("0"+partidosPerdidos.getText()));
 				// Llamo al método guardar en fichero.
 				guardarEnFichero();
 			}
@@ -153,7 +162,10 @@ public class VentanaEquipo extends JFrame {
 		btnLeerDeArchivo.setBounds(136, 167, 125, 23);
 		contentPane.add(btnLeerDeArchivo);
 		
-		equipo = equipoAModificar;
+		
+		
+		
+		
 	}
 	
 	private void guardarEnFichero(){

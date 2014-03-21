@@ -64,4 +64,10 @@ public class Liga {
 		return miLiga.size();
 	}
 	
+	public Equipo addEquipo(){
+		miEquipo = new Equipo();
+		miLiga.add(miEquipo);
+		return miEquipo;
+	}
+	
 }
