@@ -12,6 +12,9 @@ import javax.swing.JComboBox;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.WindowFocusListener;
 
 
 public class VentanaLiga extends JFrame {
@@ -19,20 +22,32 @@ public class VentanaLiga extends JFrame {
 	private JPanel contentPane;
 	private JTextField nombreLiga;
 	private Liga nuevaLiga;
-	private JComboBox<String> comboBox;
+	private JComboBox<Equipo> comboBox;
 	private JTextField numEquipos;
 	/**
 	 * Create the frame.
 	 */
 	public VentanaLiga(Liga miLiga) {
 	
+		nuevaLiga = miLiga;
+		
+		addWindowFocusListener(new WindowFocusListener() {
+			public void windowGainedFocus(WindowEvent arg0) {
+				nombreLiga.setText(nuevaLiga.getnombreLiga());
+				numEquipos.setText(String.valueOf(comboBox.getItemCount()));
+			}
+			public void windowLostFocus(WindowEvent arg0) {
+			}
+		});	
+		
 		addWindowListener(new WindowAdapter() {
+			
 			@Override
 			public void windowOpened(WindowEvent arg0) {
 				nombreLiga.setText(nuevaLiga.getnombreLiga());
 				
 				for (int i=0;i<nuevaLiga.getNumEquipos();i++){
-					comboBox.addItem(nuevaLiga.getEquipo(i).getNombreEquipo());
+					comboBox.addItem(nuevaLiga.getEquipo(i));
 					
 				}
 				numEquipos.setText(String.valueOf(comboBox.getItemCount()));
@@ -40,8 +55,8 @@ public class VentanaLiga extends JFrame {
 			
 		});
 		setTitle("Crear Liga");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 289, 194);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(100, 100, 298, 214);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -69,15 +84,22 @@ public class VentanaLiga extends JFrame {
 		btnGuardarLiga.setBounds(10, 130, 256, 23);
 		contentPane.add(btnGuardarLiga);
 		
-		comboBox = new JComboBox<String>();
+		comboBox = new JComboBox<Equipo>();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				nombreLiga.setText(nuevaLiga.getnombreLiga());
+				numEquipos.setText(String.valueOf(comboBox.getItemCount()));
+				
+			}
+		});
 		comboBox.setBounds(10, 62, 256, 20);
 		contentPane.add(comboBox);
 		
 		JButton btnNewButton = new JButton("Editar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				VentanaEquipo frame = new VentanaEquipo(nuevaLiga,comboBox.getSelectedIndex());
+				VentanaEquipo frame = new VentanaEquipo(nuevaLiga,comboBox.getSelectedIndex(),comboBox);
 				frame.setVisible(true);
 				
 			}
@@ -97,7 +119,7 @@ public class VentanaLiga extends JFrame {
 		JButton btnEliminarEquipoLiga = new JButton("+");
 		btnEliminarEquipoLiga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				VentanaEquipo frame = new VentanaEquipo(nuevaLiga,-1);
+				VentanaEquipo frame = new VentanaEquipo(nuevaLiga,-1,comboBox);
 				frame.setVisible(true);
 			}
 		});
@@ -105,9 +127,21 @@ public class VentanaLiga extends JFrame {
 		contentPane.add(btnEliminarEquipoLiga);
 		
 		JButton button = new JButton("-");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nuevaLiga.removeEquipo(nuevaLiga.getEquipo(comboBox.getSelectedIndex())); 
+				comboBox.removeItem(comboBox.getSelectedItem());
+			}
+		});
 		button.setBounds(204, 93, 59, 23);
 		contentPane.add(button);
 		
 		nuevaLiga = miLiga;
+	}
+	
+	public void refresCombo (){
+		
+			
+		
 	}
 }

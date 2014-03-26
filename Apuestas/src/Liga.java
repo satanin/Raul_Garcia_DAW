@@ -70,4 +70,8 @@ public class Liga {
 		return miEquipo;
 	}
 	
+	public void removeEquipo(Equipo equipoAEliminar){
+		miLiga.remove(equipoAEliminar);
+	}
+	
 }

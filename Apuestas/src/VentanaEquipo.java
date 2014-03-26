@@ -1,4 +1,5 @@
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
@@ -9,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,18 +33,20 @@ public class VentanaEquipo extends JFrame {
 	private JTextField partidosPerdidos;
 	private Equipo equipo;
 	private Liga miLiga;
+	private VentanaLiga miVentana;
+	private int modificoEquipo=0;
+	private JComboBox comboBox;
 
-	/**
-	 * Create the frame.
-	 */
+
 	// Modifico el constructor para poder ponerle como parámetro o argumento el objeto de clase Equipo
-	public VentanaEquipo(Liga ligaAModificar, int miEquipo) {
+	public VentanaEquipo(Liga ligaAModificar, int miEquipo,JComboBox elComboBox) {
 		miLiga = ligaAModificar;
-		this.equipo = miLiga.addEquipo();
+		modificoEquipo = miEquipo;
+		comboBox = elComboBox;
 		
-		if (miEquipo>-1){
+		if (modificoEquipo>-1){
 			this.equipo = miLiga.getEquipo(miEquipo);
-			nombreEquipo.setEditable(false);
+			//nombreEquipo.setEditable(false);
 		addWindowListener(new WindowAdapter() {
 			
 			@Override
@@ -54,7 +58,7 @@ public class VentanaEquipo extends JFrame {
 				partidosPerdidos.setText(String.valueOf(equipo.getPartidosPerdidos()));
 			}
 		});
-		}
+		}else this.equipo = miLiga.addEquipo();
 		
 		setTitle("Guardar Equipos");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -117,15 +121,12 @@ public class VentanaEquipo extends JFrame {
 		JButton btnGuardarEquipo = new JButton("Guardar Equipo");
 		btnGuardarEquipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// Asigno a cada variable del objeto equipo un valor que obtengo de la ventana.
-				equipo.setNombreEquipo(nombreEquipo.getText());
-				equipo.setGolesFavor(Integer.valueOf("0"+ golesAFavor.getText()));
-				equipo.setGolesEnContra(Integer.valueOf("0"+golesEnContra.getText()));
-				equipo.setPartidosGanados(Integer.valueOf("0"+partidosGanados.getText()));
-				equipo.setPartidosPerdidos(Integer.valueOf("0"+partidosPerdidos.getText()));
-				
-				// Llamo al método guardar en fichero.
-				// guardarEnFichero();
+				guardarEquipo();
+				if (modificoEquipo==-1){
+					comboBox.addItem(equipo);
+					modificoEquipo=0;
+				}
+
 			}
 		});
 		btnGuardarEquipo.setBounds(10, 201, 251, 23);
@@ -135,13 +136,13 @@ public class VentanaEquipo extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				equipo.setNombreEquipo(""+nombreEquipo.getText());
-				equipo.setGolesFavor(Integer.valueOf("0"+golesAFavor.getText()));
-				equipo.setGolesEnContra(Integer.valueOf("0"+golesEnContra.getText()));
-				equipo.setPartidosGanados(Integer.valueOf("0"+partidosGanados.getText()));
-				equipo.setPartidosPerdidos(Integer.valueOf("0"+partidosPerdidos.getText()));
+				guardarEquipo();
 				// Llamo al método guardar en fichero.
 				guardarEnFichero();
+				if (modificoEquipo==-1){
+				comboBox.addItem(equipo);
+				modificoEquipo=0;
+				}
 			}
 		});
 		btnNewButton.setBounds(10, 167, 125, 23);
@@ -203,5 +204,15 @@ public class VentanaEquipo extends JFrame {
 			}
 			return equipo;
 	
+	}
+	
+	private void guardarEquipo(){		
+		
+		equipo.setNombreEquipo(nombreEquipo.getText());
+		equipo.setGolesFavor(Integer.valueOf("0"+ golesAFavor.getText()));
+		equipo.setGolesEnContra(Integer.valueOf("0"+golesEnContra.getText()));
+		equipo.setPartidosGanados(Integer.valueOf("0"+partidosGanados.getText()));
+		equipo.setPartidosPerdidos(Integer.valueOf("0"+partidosPerdidos.getText()));
+
 	}
 }

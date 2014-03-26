@@ -83,6 +83,8 @@ public class Equipo implements Serializable{
 	public void setPartidosPerdidos(int partidosPerdidos) {
 		this.partidosPerdidos = partidosPerdidos;
 	}
-
+	public String toString(){
+		return nombreEquipo;
+	}
 
 }
