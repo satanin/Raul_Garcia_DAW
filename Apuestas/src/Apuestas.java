@@ -13,23 +13,17 @@ import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
+// Ahora Apuestas es nuestra ventana principal 
 public class Apuestas extends JFrame {
 	
-	
-	private JPanel contentPane;
-	private JTextField textField;
-	private JLabel lblNewLabel;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
-	private JButton btnSeguimientoDeApuestas;
-	private JTextField textField_1;
+	private JTextField ligaAAdministrar;
+	// Creamos un objeto Liga que utilizaremos para pasar como parámetro a VentanaLiga
 	public Liga miLiga = new Liga();
 	
-
-	/**
-	 * Launch the application.
-	 */
+	// Main
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,9 +36,18 @@ public class Apuestas extends JFrame {
 			}
 		});
 	}
+	// Ventana
 	public Apuestas() {
-		setTitle("Crear Liga");
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				ligaAAdministrar.setText(miLiga.getnombreLiga());
+			}
+		});
+		// Establecemos el título de la ventana
+		setTitle("Apuestas");
+		// Le decimos a la ventana que cuando se cierre salga del programa.
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 307, 284);
 		getContentPane().setLayout(null);
 		
@@ -58,15 +61,15 @@ public class Apuestas extends JFrame {
 		lblNombreDeLa.setBounds(10, 22, 111, 14);
 		panel.add(lblNombreDeLa);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(10, 47, 248, 20);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		ligaAAdministrar = new JTextField();
+		ligaAAdministrar.setBounds(10, 47, 248, 20);
+		panel.add(ligaAAdministrar);
+		ligaAAdministrar.setColumns(10);
 		
 		JButton btnAdministrar = new JButton("Administrar");
 		btnAdministrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				// Abrimos la ventana VentanaLiga y le pasamos como parámetro el objeto liga miLiga.
 				VentanaLiga frame = new VentanaLiga(miLiga);
 				frame.setVisible(true);
 				
@@ -75,10 +78,12 @@ public class Apuestas extends JFrame {
 		btnAdministrar.setBounds(10, 98, 111, 23);
 		panel.add(btnAdministrar);
 		
+		// El botón Generar Apuesta de momeno no hace nada
 		JButton btnGenerarApuesta = new JButton("Generar Apuesta");
 		btnGenerarApuesta.setBounds(10, 169, 268, 23);
 		getContentPane().add(btnGenerarApuesta);
 		
+		// El botón Segumiento de Apuestas de momento tampoco hace nada.
 		JButton btnSeguimientoDeApuestas_1 = new JButton("Seguimiento de Apuestas");
 		btnSeguimientoDeApuestas_1.setBounds(10, 203, 268, 23);
 		getContentPane().add(btnSeguimientoDeApuestas_1);

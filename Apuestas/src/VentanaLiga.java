@@ -18,42 +18,29 @@ import java.awt.event.WindowFocusListener;
 
 
 public class VentanaLiga extends JFrame {
-
+	// Declaramos los objetos necesarios.
 	private JPanel contentPane;
 	private JTextField nombreLiga;
 	private Liga nuevaLiga;
 	private JComboBox<Equipo> comboBox;
 	private JTextField numEquipos;
-	/**
-	 * Create the frame.
-	 */
+
+	// creamos la ventana
 	public VentanaLiga(Liga miLiga) {
-	
+		// Asignamos a nuevaLiga la liga que le hemos pasado por parámetros para poder trabajar con ella.
 		nuevaLiga = miLiga;
 		
+		// Establecemos un listener para que cuando la ventana gane el foco llame a refreshCombo para que inicialice y actualice el combobox
+		//  y además se actualice el nombre de la liga y el número de equipos
 		addWindowFocusListener(new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent arg0) {
-				nombreLiga.setText(nuevaLiga.getnombreLiga());
-				numEquipos.setText(String.valueOf(comboBox.getItemCount()));
+				// llamamos a la función refreshCombo.
+				refreshData();
 			}
 			public void windowLostFocus(WindowEvent arg0) {
 			}
 		});	
 		
-		addWindowListener(new WindowAdapter() {
-			
-			@Override
-			public void windowOpened(WindowEvent arg0) {
-				nombreLiga.setText(nuevaLiga.getnombreLiga());
-				
-				for (int i=0;i<nuevaLiga.getNumEquipos();i++){
-					comboBox.addItem(nuevaLiga.getEquipo(i));
-					
-				}
-				numEquipos.setText(String.valueOf(comboBox.getItemCount()));
-			}
-			
-		});
 		setTitle("Crear Liga");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 298, 214);
@@ -139,9 +126,16 @@ public class VentanaLiga extends JFrame {
 		nuevaLiga = miLiga;
 	}
 	
-	public void refresCombo (){
-		
+	// función para refreshcar el comboBox
+	public void refreshData (){
+		comboBox.removeAllItems();
+		for (int i=0;i<nuevaLiga.getNumEquipos();i++){
+			comboBox.addItem(nuevaLiga.getEquipo(i));
 			
+		}
+		
+		nombreLiga.setText(nuevaLiga.getnombreLiga());
+		numEquipos.setText(String.valueOf(comboBox.getItemCount()));
 		
 	}
 }
