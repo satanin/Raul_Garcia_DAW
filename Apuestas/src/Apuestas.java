@@ -5,16 +5,27 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import java.awt.BorderLayout;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
+
 import javax.swing.border.TitledBorder;
+
+import com.mysql.jdbc.Statement;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 // Ahora Apuestas es nuestra ventana principal 
 public class Apuestas extends JFrame {
@@ -22,6 +33,9 @@ public class Apuestas extends JFrame {
 	private JTextField ligaAAdministrar;
 	// Creamos un objeto Liga que utilizaremos para pasar como parámetro a VentanaLiga
 	public Liga miLiga = new Liga();
+	public Connection conexion = null; // Conexión a la base de datos
+	public Statement instruccion = null; // Instrucción o consulta a la base de datos
+	public ResultSet misResultados = null; // Resultados devueltos por la consulta.
 	
 	// Main
 	public static void main(String[] args) {
@@ -38,6 +52,22 @@ public class Apuestas extends JFrame {
 	}
 	// Ventana
 	public Apuestas() {
+		
+		
+		try {
+			// Cargamos el driver
+			Class.forName("com.mysql.jdbc.Driver");
+			// Establecemos la conexión con la base de datos.
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost/apuestas","apuestas","z62cbY9LcsLY4vQj");
+			// Inicializamos el objeto Statement para hacer consultas a la base de datos
+			instruccion = (Statement) conexion.createStatement();
+			// Almacenamos el conjunto de resultados en la variable misResultados
+			misResultados = instruccion.executeQuery("SELECT idLiga, Nombre FROM ligas");
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
