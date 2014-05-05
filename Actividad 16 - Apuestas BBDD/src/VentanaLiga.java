@@ -100,6 +100,7 @@ public class VentanaLiga extends JFrame {
 		JButton btnAgregarEquipo = new JButton("Agregar Equipo");
 		btnAgregarEquipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				miLiga.setNombreLiga(nombreLiga.getText());
 				miEquipo = new Equipo(miLiga.getIdLiga());
 				System.out.println(misEquiposLiga.size());
 				VentanaEquipo frame = new VentanaEquipo(miEquipo, misDatos,miLiga);

@@ -91,6 +91,13 @@ public class Apuestas extends JFrame {
 		panel.add(btnNewButton);
 		
 		JButton btnAgregarLiga = new JButton("Agregar Liga");
+		btnAgregarLiga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miLiga = new Liga();
+				VentanaLiga frame = new VentanaLiga(miLiga, misDatos);
+				frame.setVisible(true);
+			}
+		});
 		btnAgregarLiga.setBounds(121, 52, 111, 23);
 		panel.add(btnAgregarLiga);
 	}

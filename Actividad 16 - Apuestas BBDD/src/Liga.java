@@ -19,6 +19,12 @@ public class Liga {
 		this.numEquipos = numEquipos;
 		misEquiposLiga = misDatos.leerEquipos(idLiga);
 	}
+	
+	public Liga(){
+		nombreLiga = null;
+		numEquipos = 0;
+		misEquiposLiga = new ArrayList<Equipo>();
+	}
 
 	@Override
 	public String toString() {

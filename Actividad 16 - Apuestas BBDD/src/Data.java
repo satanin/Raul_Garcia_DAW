@@ -120,7 +120,7 @@ public class Data {
 			try{
 				instruccion = (Statement) conexion.createStatement();
 				String sql_Strng="INSERT INTO  `apuestas`.`ligas` (`nombre` ,`numEquipos`)";
-				sql_Strng = sql_Strng+"VALUES ("+miLiga.getNombreLiga()+"',  '"+miLiga.getNumEquipos()+"');";
+				sql_Strng = sql_Strng+"VALUES ('"+miLiga.getNombreLiga()+"',  '"+miLiga.getNumEquipos()+"');";
 				System.out.println(sql_Strng);
 				instruccion.executeUpdate(sql_Strng);
 			}catch (SQLException e){

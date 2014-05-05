@@ -46,7 +46,7 @@ public class VentanaEquipo extends JFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 275, 325);
+		setBounds(100, 100, 275, 285);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -54,7 +54,7 @@ public class VentanaEquipo extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Gestion Equipo", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
-		panel.setBounds(10, 11, 239, 259);
+		panel.setBounds(10, 11, 239, 222);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -119,10 +119,6 @@ public class VentanaEquipo extends JFrame {
 		});
 		btnGuardar.setBounds(10, 186, 219, 23);
 		panel.add(btnGuardar);
-		
-		JButton btnNewButton = new JButton("Guardar y Volver a Liga");
-		btnNewButton.setBounds(10, 225, 219, 23);
-		panel.add(btnNewButton);
 	}
 
 }

@@ -10,8 +10,7 @@ public class Equipo {
 		this.golesEnContra = golesEnContra;
 		this.partidosGanados = partidosGanados;
 		this.partidosPerdidos = partidosPerdidos;
-		this.idEquipo = idEquipo;
-		
+		this.idEquipo = idEquipo;	
 		
 	}
 	
@@ -22,6 +21,14 @@ public class Equipo {
 		this.partidosGanados = 0;
 		this.partidosPerdidos = 0;
 		this.idLiga = idLiga;
+	}
+	
+	public Equipo(){
+		this.nombreEquipo = null;
+		this.golesFavor = 0;
+		this.golesEnContra = 0;
+		this.partidosGanados = 0;
+		this.partidosPerdidos = 0;
 	}
 
 	@Override
