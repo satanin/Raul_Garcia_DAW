@@ -1,3 +1,5 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -5,33 +7,43 @@ public class Liga {
 	private int numEquipos;
 	private String nombreLiga;
 	private ArrayList<Equipo> miLiga = new ArrayList<Equipo>();
-	private String[] equiposEspana = {"Barcelona", "Atlético","Real Madrid", "Villareal", "Athletic","Valencia","Espanyol","Getafe","Levante","Málaga","Betis","Granada","R.Sociedad","Sevilla","Celta","Valladolid","Elche","Almería","Osasuna","Rayo"};
 	private Equipo miEquipo;
-
+	private ResultSet miResultSetLiga;
+	private ResultSet miResultSetEquipo;
+	private Conectar conexion;
+	private int indiceLiga;
 	// constructor de Liga sin parámetros, para crear por defecto, la liga española. 
-	public Liga() {
-		// Establecemos el nombre
-		this.nombreLiga = "Liga Española";
-		// Establecemos número de equipos.
-		this.numEquipos = 20;
-		// Aquí establecemos el tamaño de la liga y reservamos ya el espacio de 20 items Equipo en el ArrayList miLiga.
-		// miLiga = new Equipo[this.numEquipos];
-		// Aquí un poco de texto, para saber que vamos haciendo
-		System.out.println("Rellenando Equipos de Liga");
-		// Ahora vamos a rellenar el ArrayList liga con objetos equipo, para que ya se pueda trabajar con ellos.
-		for (int i=0;i<this.numEquipos;i++){			
-			// Aquí muestro el equipo que voy a añadir por consola
-			System.out.println("Anadiendo al "+equiposEspana[i]+" a la liga Española");
-			// Aquí asigno a la posición i del vector miLiga un objeto Equipo.
-			miEquipo = new Equipo(equiposEspana[i]);
-			miLiga.add(miEquipo);
-			// Aquí cambio el nombre del objecto miLiga[i] y le pongo el nombre del equipo.
+	public Liga(int indiceLiga, Conectar conexion) {
+		this.indiceLiga = indiceLiga;
+		this.conexion = conexion;
+		miResultSetLiga = this.conexion.leerLiga(indiceLiga);
+		miResultSetEquipo = this.conexion.leerEquipos(indiceLiga);
+		
+		try {
+			// Establecemos el nombre
+			miResultSetLiga.first();
+			this.nombreLiga = miResultSetLiga.getString("Nombre");
+			// Establecemos número de equipos.
+			this.numEquipos = miResultSetLiga.getInt("numEquipos");
+			System.out.println("Rellenando Equipos de Liga");
 			
-		}		
-	}
+			while(miResultSetEquipo.next()){
+				miEquipo = new Equipo(miResultSetEquipo.getString("nombreEquipo"),miResultSetEquipo.getInt("golesFavor"),miResultSetEquipo.getInt("golesEnContra"),miResultSetEquipo.getInt("partidosGanados"),miResultSetEquipo.getInt("partidosPerdidos"));
+				// Ahora vamos a rellenar el ArrayList liga con objetos equipo, para que ya se pueda trabajar con ellos.
+				miLiga.add(miEquipo);			
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+		}
+
+			
+
+			
+	}		
+	
 	// Creo un tercer constructor al que le puedes pasar por parámetros el nombre de la liga y el número
 	// de equipos que quieres que tenga y te la crea.
-	public Liga(int numEquipos, String nombreLiga){
+	public Liga(int idLiga, String nombreLiga, int numEquipos){
 		this.numEquipos = numEquipos;
 		this.nombreLiga = nombreLiga;
 		for (int i=0;i<this.numEquipos;i++){
@@ -42,6 +54,7 @@ public class Liga {
 	
 	public void setNombreLiga(String nombreLiga){
 		this.nombreLiga = nombreLiga;
+		conexion.setNombreLiga(this.indiceLiga, this.nombreLiga);
 	}
 
 	public String getnombreLiga(){
@@ -54,11 +67,7 @@ public class Liga {
 	}
 	
 	public void setNumEquipos(int numEquipos){
-		
-		for (int i=0;i<numEquipos;i++){
-			miEquipo = new Equipo();
-			miLiga.add(miEquipo);
-		}
+		conexion.setNumeroEquipos(this.indiceLiga,numEquipos);
 	}
 	public int getNumEquipos(){
 		return miLiga.size();
@@ -73,5 +82,12 @@ public class Liga {
 	public void removeEquipo(Equipo equipoAEliminar){
 		miLiga.remove(equipoAEliminar);
 	}
+
+	@Override
+	public String toString() {
+		return nombreLiga;
+	}
+	
+	
 	
 }

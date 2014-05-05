@@ -32,6 +32,7 @@ public class Equipo implements Serializable{
 		partidosGanados = 0;
 		partidosPerdidos = 0;
 		
+		
 	}
 	
 	public Equipo(String nombreEquipo) {
@@ -86,5 +87,4 @@ public class Equipo implements Serializable{
 	public String toString(){
 		return nombreEquipo;
 	}
-
 }

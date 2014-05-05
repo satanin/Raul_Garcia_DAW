@@ -39,13 +39,11 @@ public class VentanaEquipo extends JFrame {
 
 
 	// Modifico el constructor para poder ponerle como parámetro o argumento el objeto de clase Equipo
-	public VentanaEquipo(Liga ligaAModificar, int miEquipo,JComboBox elComboBox) {
-		miLiga = ligaAModificar;
-		modificoEquipo = miEquipo;
-		comboBox = elComboBox;
+	public VentanaEquipo(int miEquipo) {
+		modificoEquipo=miEquipo;
 		
 		if (modificoEquipo>-1){
-			this.equipo = miLiga.getEquipo(miEquipo);
+			this.equipo = ;
 			//nombreEquipo.setEditable(false);
 		addWindowListener(new WindowAdapter() {
 			

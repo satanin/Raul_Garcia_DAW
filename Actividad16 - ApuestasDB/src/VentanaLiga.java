@@ -10,26 +10,38 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JComboBox;
 
+import com.mysql.jdbc.Statement;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.WindowFocusListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class VentanaLiga extends JFrame {
 	// Declaramos los objetos necesarios.
 	private JPanel contentPane;
 	private JTextField nombreLiga;
-	private Liga nuevaLiga;
-	private JComboBox<Equipo> comboBox;
+	private Liga miLiga;
+	private JComboBox comboEquipos;
 	private JTextField numEquipos;
+	private int liga;
+	private Conectar conexion;
+	private ResultSet misResultadosLiga,misResultadosEquipo;
 
 	// creamos la ventana
-	public VentanaLiga(Liga miLiga) {
-		// Asignamos a nuevaLiga la liga que le hemos pasado por parámetros para poder trabajar con ella.
-		nuevaLiga = miLiga;
-		
+	public VentanaLiga(int indiceLiga,int crearNuevaLiga, Conectar conexion) {
+		liga = indiceLiga;
+		if (crearNuevaLiga == 0){
+			// Asignamos a nuevaLiga la liga que le hemos pasado por parámetros para poder trabajar con ella.			
+			miLiga = new Liga(indiceLiga,conexion);
+						
+		}		
 		// Establecemos un listener para que cuando la ventana gane el foco llame a refreshCombo para que inicialice y actualice el combobox
 		//  y además se actualice el nombre de la liga y el número de equipos
 		addWindowFocusListener(new WindowFocusListener() {
@@ -58,35 +70,26 @@ public class VentanaLiga extends JFrame {
 		contentPane.add(nombreLiga);
 		nombreLiga.setColumns(10);
 		
-		JButton btnGuardarLiga = new JButton("Cambiar Nombre Liga");
+		JButton btnGuardarLiga = new JButton("Guardar Liga");
 		btnGuardarLiga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				
-				nuevaLiga.setNombreLiga(nombreLiga.getText());
-
-				
+				miLiga.setNombreLiga(nombreLiga.getText());
+				miLiga.setNumEquipos(Integer.valueOf(numEquipos.getText()));
+						
 			}
 		});
 		btnGuardarLiga.setBounds(10, 130, 256, 23);
 		contentPane.add(btnGuardarLiga);
 		
-		comboBox = new JComboBox<Equipo>();
-		comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				nombreLiga.setText(nuevaLiga.getnombreLiga());
-				numEquipos.setText(String.valueOf(comboBox.getItemCount()));
-				
-			}
-		});
-		comboBox.setBounds(10, 62, 256, 20);
-		contentPane.add(comboBox);
+		comboEquipos = new JComboBox<Equipo>();
+		comboEquipos.setBounds(10, 62, 256, 20);
+		contentPane.add(comboEquipos);
 		
 		JButton btnNewButton = new JButton("Editar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				VentanaEquipo frame = new VentanaEquipo(nuevaLiga,comboBox.getSelectedIndex(),comboBox);
+				VentanaEquipo frame = new VentanaEquipo(comboEquipos.getSelectedIndex());
 				frame.setVisible(true);
 				
 			}
@@ -94,8 +97,8 @@ public class VentanaLiga extends JFrame {
 		btnNewButton.setBounds(10, 93, 117, 23);
 		contentPane.add(btnNewButton);
 		
-		JLabel lblNEquipos = new JLabel("N\u00BA Equipos");
-		lblNEquipos.setBounds(204, 11, 62, 14);
+		JLabel lblNEquipos = new JLabel("N\u00BA Eq.");
+		lblNEquipos.setBounds(236, 11, 46, 14);
 		contentPane.add(lblNEquipos);
 		
 		numEquipos = new JTextField();
@@ -106,7 +109,7 @@ public class VentanaLiga extends JFrame {
 		JButton btnEliminarEquipoLiga = new JButton("+");
 		btnEliminarEquipoLiga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				VentanaEquipo frame = new VentanaEquipo(nuevaLiga,-1,comboBox);
+				VentanaEquipo frame = new VentanaEquipo(-1);
 				frame.setVisible(true);
 			}
 		});
@@ -116,26 +119,25 @@ public class VentanaLiga extends JFrame {
 		JButton button = new JButton("-");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nuevaLiga.removeEquipo(nuevaLiga.getEquipo(comboBox.getSelectedIndex())); 
-				comboBox.removeItem(comboBox.getSelectedItem());
+
 			}
 		});
 		button.setBounds(204, 93, 59, 23);
 		contentPane.add(button);
 		
-		nuevaLiga = miLiga;
+		
 	}
 	
 	// función para refreshcar el comboBox
 	public void refreshData (){
-		comboBox.removeAllItems();
-		for (int i=0;i<nuevaLiga.getNumEquipos();i++){
-			comboBox.addItem(nuevaLiga.getEquipo(i));
-			
-		}
-		
-		nombreLiga.setText(nuevaLiga.getnombreLiga());
-		numEquipos.setText(String.valueOf(comboBox.getItemCount()));
-		
+		comboEquipos.removeAllItems();		
+
+		System.out.println("Estoy en RefreshData");
+		for(int i=0;i<miLiga.getNumEquipos();i++){
+				comboEquipos.addItem(miLiga.getEquipo(i));
+				}		
+		nombreLiga.setText(miLiga.getnombreLiga());
+		numEquipos.setText(String.valueOf(comboEquipos.getItemCount()));
+		System.out.println(comboEquipos.getItemCount());
 	}
 }

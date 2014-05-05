@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 
 public class Liga {
+
+
 	private int numEquipos;
 	private String nombreLiga;
 	private ArrayList<Equipo> miLiga = new ArrayList<Equipo>();
@@ -72,6 +74,11 @@ public class Liga {
 	
 	public void removeEquipo(Equipo equipoAEliminar){
 		miLiga.remove(equipoAEliminar);
+	}
+	
+	@Override
+	public String toString() {
+		return nombreLiga;
 	}
 	
 }

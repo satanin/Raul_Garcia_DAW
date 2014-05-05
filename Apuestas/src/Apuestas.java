@@ -23,13 +23,15 @@ import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.swing.JComboBox;
 
 // Ahora Apuestas es nuestra ventana principal 
 public class Apuestas extends JFrame {
 	
 	private JTextField ligaAAdministrar;
 	// Creamos un objeto Liga que utilizaremos para pasar como parámetro a VentanaLiga
-	public Liga miLiga = new Liga();
+	private Liga miLiga = new Liga();
+	private JComboBox comboLigas; 
 	
 	// Main
 	public static void main(String[] args) {
@@ -51,6 +53,7 @@ public class Apuestas extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
 				ligaAAdministrar.setText(miLiga.getnombreLiga());
+				comboLigas.addItem(miLiga);
 			}
 		});
 		// Establecemos el título de la ventana
@@ -71,7 +74,7 @@ public class Apuestas extends JFrame {
 		panel.add(lblNombreDeLa);
 		
 		ligaAAdministrar = new JTextField();
-		ligaAAdministrar.setBounds(10, 47, 248, 20);
+		ligaAAdministrar.setBounds(10, 40, 248, 20);
 		panel.add(ligaAAdministrar);
 		ligaAAdministrar.setColumns(10);
 		
@@ -86,6 +89,10 @@ public class Apuestas extends JFrame {
 		});
 		btnAdministrar.setBounds(10, 98, 111, 23);
 		panel.add(btnAdministrar);
+		
+		comboLigas = new JComboBox<Liga>();
+		comboLigas.setBounds(10, 71, 248, 20);
+		panel.add(comboLigas);
 		
 		// El botón Generar Apuesta de momeno no hace nada
 		JButton btnGenerarApuesta = new JButton("Generar Apuesta");
