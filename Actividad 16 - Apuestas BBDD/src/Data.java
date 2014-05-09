@@ -18,7 +18,7 @@ public class Data {
 	public Data() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost/apuestas","apuestas","z62cbY9LcsLY4vQj");
+			conexion = DriverManager.getConnection("jdbc:mysql://satanin.myftp.org/apuestas","apuestas","z62cbY9LcsLY4vQj");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,8 +67,8 @@ public class Data {
 	}
 	
 	public void guardarEquipo(Equipo equipoModificado){
-		
-		if(equipoModificado.getIdEquipo()<0){
+		System.out.println(equipoModificado.getIdEquipo());
+		if(equipoModificado.getIdEquipo()>0){
 			try{
 				instruccion = (Statement) conexion.createStatement();
 				instruccion.executeUpdate("UPDATE `equipos` SET `nombreEquipo`=\""+equipoModificado.toString()+"\", `golesFavor`="+equipoModificado.getGolesFavor()+

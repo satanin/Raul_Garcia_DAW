@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -24,16 +26,19 @@ public class VentanaEquipo extends JFrame {
 	private JTextField golesEnContra;
 	private JTextField partidosGanados;
 	private JTextField partidosPerdidos;
+	private JComboBox<Equipo> comboEquiposA;
 	private Equipo miEquipoA;
 	private Data misDatosA;
 	private Liga miLigaA;
+	
+	private JButton btnGuardar;
 
 
-	public VentanaEquipo(Equipo miEquipo, Data misDatos, Liga miLiga) {
+	public VentanaEquipo(Equipo miEquipo, Data misDatos, Liga miLiga,JComboBox<Equipo> comboEquipos) {
 		miEquipoA = miEquipo;
 		misDatosA = misDatos;
 		miLigaA = miLiga;
-		
+		comboEquiposA=comboEquipos;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
@@ -103,7 +108,7 @@ public class VentanaEquipo extends JFrame {
 		lblPartidosPerdidos.setBounds(10, 146, 84, 14);
 		panel.add(lblPartidosPerdidos);
 		
-		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				miEquipoA.setNombreEquipo(nombreEquipo.getText());
@@ -111,10 +116,9 @@ public class VentanaEquipo extends JFrame {
 				miEquipoA.setGolesEnContra(Integer.valueOf(golesEnContra.getText()));
 				miEquipoA.setPartidosGanados(Integer.valueOf(partidosGanados.getText()));
 				miEquipoA.setPartidosPerdidos(Integer.valueOf(partidosPerdidos.getText()));
+				System.out.println(miEquipoA.getIdEquipo());
 				miLigaA.addEquipo(miEquipoA);
-				
-				
-				
+				comboEquiposA.addItem(miEquipoA);
 			}
 		});
 		btnGuardar.setBounds(10, 186, 219, 23);

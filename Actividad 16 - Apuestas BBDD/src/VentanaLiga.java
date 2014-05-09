@@ -38,6 +38,7 @@ public class VentanaLiga extends JFrame {
 		addWindowFocusListener(new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent arg0) {
 				refreshData();
+				
 			}
 			public void windowLostFocus(WindowEvent arg0) {
 			}
@@ -103,7 +104,7 @@ public class VentanaLiga extends JFrame {
 				miLiga.setNombreLiga(nombreLiga.getText());
 				miEquipo = new Equipo(miLiga.getIdLiga());
 				System.out.println(misEquiposLiga.size());
-				VentanaEquipo frame = new VentanaEquipo(miEquipo, misDatos,miLiga);
+				VentanaEquipo frame = new VentanaEquipo(miEquipo, misDatos,miLiga,comboEquipos);
 				frame.setVisible(true);
 			}
 		});
@@ -129,15 +130,30 @@ public class VentanaLiga extends JFrame {
 				
 				miEquipo = misEquiposLiga.get(comboEquipos.getSelectedIndex());
 				System.out.println(miEquipo.toString());
-				VentanaEquipo frame = new VentanaEquipo(miEquipo, misDatos, miLiga);
+				VentanaEquipo frame = new VentanaEquipo(miEquipo, misDatos, miLiga,comboEquipos);
 				frame.setVisible(true);
 			}
 		});
 		btnEditarEquipo.setBounds(10, 145, 105, 23);
 		panel.add(btnEditarEquipo);
+		
+		refreshDataInit();
 	}
 	
 	private void refreshData(){
+		/*
+		comboEquipos.removeAllItems();
+		misEquiposLiga = miLiga.getEquiposLiga();
+		nombreLiga.setText(miLiga.toString());
+		numEquipos.setText(String.valueOf(misEquiposLiga.size()));
+		for(int i=0;i<misEquiposLiga.size();i++){
+			comboEquipos.addItem(misEquiposLiga.get(i));
+		}*/
+				
+	}
+	
+	private void refreshDataInit(){
+		
 		comboEquipos.removeAllItems();
 		misEquiposLiga = miLiga.getEquiposLiga();
 		nombreLiga.setText(miLiga.toString());
