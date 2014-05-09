@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
+
 import com.mysql.jdbc.Statement;
 
 
@@ -104,7 +106,7 @@ public class Data {
 		}
 	}
 	
-	public void guardarLiga(Liga miLiga){
+	public void guardarLiga(Liga miLiga,JComboBox<Liga> comboLigas){
 		if(miLiga.getIdLiga()>0){
 			try{
 				instruccion = (Statement) conexion.createStatement();
@@ -123,6 +125,7 @@ public class Data {
 				sql_Strng = sql_Strng+"VALUES ('"+miLiga.getNombreLiga()+"',  '"+miLiga.getNumEquipos()+"');";
 				System.out.println(sql_Strng);
 				instruccion.executeUpdate(sql_Strng);
+				comboLigas.addItem(miLiga);
 			}catch (SQLException e){
 				e.printStackTrace();
 			}

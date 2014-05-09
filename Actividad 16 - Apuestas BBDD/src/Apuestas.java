@@ -55,7 +55,7 @@ public class Apuestas extends JFrame {
 	public Apuestas() {
 		addWindowFocusListener(new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent arg0) {
-				refreshData();
+				
 			}
 			public void windowLostFocus(WindowEvent arg0) {
 			}
@@ -83,7 +83,7 @@ public class Apuestas extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				miLiga = misLigas.get(comboLigas.getSelectedIndex());
-				VentanaLiga frame = new VentanaLiga(miLiga, misDatos);
+				VentanaLiga frame = new VentanaLiga(miLiga, misDatos,comboLigas);
 				frame.setVisible(true);
 			}
 		});
@@ -94,26 +94,38 @@ public class Apuestas extends JFrame {
 		btnAgregarLiga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				miLiga = new Liga();
-				VentanaLiga frame = new VentanaLiga(miLiga, misDatos);
+				VentanaLiga frame = new VentanaLiga(miLiga, misDatos,comboLigas);
 				frame.setVisible(true);
 			}
 		});
 		btnAgregarLiga.setBounds(121, 52, 111, 23);
 		panel.add(btnAgregarLiga);
+		
+		refreshData();
 	}
 	
+//	private void refreshData(){
+//		comboLigas.removeAllItems();
+//		misLigas = misDatos.leerLigas();
+//		if(misLigas.size()==0){
+//			System.out.println("No hay Ligas");
+//		}else {
+//			
+//			for(int i=0; i<misLigas.size();i++){
+//				comboLigas.addItem(misLigas.get(i));
+//		}
+//		
+//		}
+//	}
+
 	private void refreshData(){
-		comboLigas.removeAllItems();
 		misLigas = misDatos.leerLigas();
 		if(misLigas.size()==0){
 			System.out.println("No hay Ligas");
 		}else {
-			
-			for(int i=0; i<misLigas.size();i++){
+			for(int i=0;i<misLigas.size();i++){
 				comboLigas.addItem(misLigas.get(i));
-		}
-		
+			}
 		}
 	}
-
 }

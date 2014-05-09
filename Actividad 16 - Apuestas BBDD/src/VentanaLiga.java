@@ -32,9 +32,10 @@ public class VentanaLiga extends JFrame {
 	private Equipo miEquipo;
 	private Data misDatos;
 	private ArrayList<Equipo> misEquiposLiga;
+	private JComboBox<Liga> comboLigasA;
 
 	
-	public VentanaLiga(final Liga miLiga, final Data misDatos) {
+	public VentanaLiga(final Liga miLiga, final Data misDatos, JComboBox<Liga> comboLigas) {
 		addWindowFocusListener(new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent arg0) {
 				refreshData();
@@ -45,7 +46,8 @@ public class VentanaLiga extends JFrame {
 		});
 		this.miLiga = miLiga;
 		this.misDatos = misDatos;
-				
+		comboLigasA = comboLigas;
+		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 406, 300);
 		contentPane = new JPanel();
@@ -91,7 +93,7 @@ public class VentanaLiga extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				miLiga.setNombreLiga(nombreLiga.getText());
 				miLiga.setNumEquipos(Integer.valueOf(numEquipos.getText()));
-				miLiga.guardarLiga(miLiga);
+				miLiga.guardarLiga(miLiga,comboLigasA);
 				
 			}
 		});

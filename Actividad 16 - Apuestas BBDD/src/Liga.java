@@ -3,6 +3,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
+
 
 public class Liga {
 	private String nombreLiga;
@@ -68,8 +70,8 @@ public class Liga {
 		return numEquipos;
 	}
 	
-	public void guardarLiga(Liga miLiga){
-		misDatos.guardarLiga(miLiga);
+	public void guardarLiga(Liga miLiga, JComboBox<Liga> comboLigas){
+		misDatos.guardarLiga(miLiga,comboLigas);
 	}
 	
 }
