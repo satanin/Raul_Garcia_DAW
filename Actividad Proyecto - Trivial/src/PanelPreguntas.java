@@ -21,10 +21,8 @@ public class PanelPreguntas extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelPreguntas() {
-		Thread miContador = new Thread( new Contador(labelContador));
-		miContador.start();
-		while(miContador.isAlive()){
-		}
+
+
 		setBounds(new Rectangle(10, 11, 563, 384));
 		
 		setBackground(Color.GRAY);
@@ -74,7 +72,8 @@ public class PanelPreguntas extends JPanel {
 		labelContador.setBounds(507, 11, 46, 34);
 		add(labelContador);
 		
-	
+		Thread miContador = new Thread( new Contador(labelContador));
+		miContador.start();
 			
 		
 		
