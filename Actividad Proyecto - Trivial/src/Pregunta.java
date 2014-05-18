@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class Pregunta {
 	
@@ -5,10 +7,12 @@ public class Pregunta {
 	private String respuesta1;
 	private String respuesta2;
 	private String respuesta3;
-	private int respuestaValida;
+	private String respuestaValida;
 	private int idPregunta;
+	private ArrayList <Pregunta> ArrayListdePreguntas= new ArrayList <Pregunta>();
 
-	public Pregunta(String pregunta, String respuesta1, String respuesta2, String respuesta3, int respuestaValida, int idPregunta) {
+
+	public Pregunta(String pregunta, String respuesta1, String respuesta2, String respuesta3, String respuestaValida, int idPregunta) {
 		this.pregunta=pregunta;
 		this.respuesta1=respuesta1;
 		this.respuesta2=respuesta2;
@@ -21,7 +25,7 @@ public class Pregunta {
 		return idPregunta;
 	}
 	
-	public void setIdPregunta(){
+	public void setIdPregunta(int idPregunta){
 		idPregunta=idPregunta;
 	}
 	
@@ -58,11 +62,11 @@ public class Pregunta {
 		respuesta3 = respuesta3;
 	}
 
-	public int getRespuestaValida() {
+	public String getRespuestaValida() {
 		return respuestaValida;
 	}
 
-	public void setRespuestaValida(int respuestaValida) {
+	public void setRespuestaValida(String respuestaValida) {
 		respuestaValida = respuestaValida;
 	}
 	
