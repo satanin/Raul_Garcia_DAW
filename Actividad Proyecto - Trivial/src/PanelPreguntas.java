@@ -127,23 +127,32 @@ public class PanelPreguntas extends JPanel {
 		btnSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CheckRespuesta();
-				if(cont<misPreguntas.size()){
-					if(misPreguntas.get(cont).getRespuestaValida() == respuesta){
-						labelResultado.setForeground(Color.GREEN);
-						labelResultado.setText("Respuesta Correcta! Sumas 5 puntos!");
-						puntos = puntos +5;
-						labelPuntos.setText(String.valueOf(puntos));
-					}else {
-						labelResultado.setForeground(Color.RED);
-						labelResultado.setText("Respuesta Incorrecta, Pardillo! ");
-						labelPuntos.setText(String.valueOf(puntos));
-					}
+				if(respuesta == 0){
+					labelResultado.setForeground(Color.RED);
+					labelResultado.setText("Tienes que seleccionar una respuesta!");
+				}else {
+					System.out.println("contador: "+cont+", Size: "+misPreguntas.size());
+					if(cont<misPreguntas.size()){
+						if(misPreguntas.get(cont).getRespuestaValida() == respuesta){
+							labelResultado.setForeground(Color.GREEN);
+							labelResultado.setText("Respuesta Correcta! Sumas 5 puntos!");
+							puntos = puntos +5;
+							labelPuntos.setText(String.valueOf(puntos));
+						}else {
+							labelResultado.setForeground(Color.RED);
+							labelResultado.setText("Respuesta Incorrecta, Pardillo! ");
+							labelPuntos.setText(String.valueOf(puntos));
+						}
+					}				
 					cont++;
+					if(cont<misPreguntas.size()){
+					System.out.println("Contador actualizado a valor:"+cont);
 					resetRadioButtons();
 					txtPregunta.setText(misPreguntas.get(cont).getPregunta());
 					radioResp1.setText(misPreguntas.get(cont).getRespuesta1());
 					radioResp2.setText(misPreguntas.get(cont).getRespuesta2());
 					radioResp3.setText(misPreguntas.get(cont).getRespuesta3());
+					}
 				}
 				
 			}
@@ -169,8 +178,10 @@ public class PanelPreguntas extends JPanel {
 			respuesta = 1;
 		}else if(radioResp2.isSelected()){
 			respuesta = 2;
-		}else{
+		}else if(radioResp3.isSelected()){
 			respuesta = 3;
+		}else{
+			respuesta = 0;
 		}
 	}
 	
