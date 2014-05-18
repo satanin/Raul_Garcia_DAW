@@ -5,8 +5,9 @@ import javax.swing.JOptionPane;
 public class Contador implements Runnable {
 	private JLabel contar;
 	private volatile boolean isRunning = true;
-	private int contarNum=30;
+	private int contarNum=3;
 	private String nombreTarea;
+	private FinDePartida finalPartida;
 
 	
 	public Contador(JLabel contar){
@@ -22,7 +23,12 @@ public class Contador implements Runnable {
 				contar.setText(String.valueOf(contarNum));
 				Thread.sleep( 1000);
 				if (contarNum==0){
-					 JOptionPane.showMessageDialog(null, "Fin de la partida");
+					try {
+						FinDePartida frame = new FinDePartida();
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}catch( InterruptedException excepcion ){
