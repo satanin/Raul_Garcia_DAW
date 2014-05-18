@@ -22,6 +22,7 @@ public class PanelPreguntas extends JPanel {
 	private Pregunta pregunta;
 	private JTextPane txtPregunta;
 	private JRadioButton radioResp1, radioResp2, radioResp3;
+	private int cont=0;
 
 	/**
 	 * Create the panel.
@@ -46,16 +47,40 @@ public class PanelPreguntas extends JPanel {
 		add(txtPregunta);
 		
 		radioResp1 = new JRadioButton("Respuesta 1");
+		radioResp1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(radioResp1.isSelected()){
+					radioResp2.setSelected(false);
+					radioResp3.setSelected(false);
+				}
+			}
+		});
 		radioResp1.setBackground(Color.LIGHT_GRAY);
 		radioResp1.setBounds(10, 159, 543, 23);
 		add(radioResp1);
 		
 		radioResp2 = new JRadioButton("Respuesta 2");
+		radioResp2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(radioResp2.isSelected()){
+					radioResp1.setSelected(false);
+					radioResp3.setSelected(false);
+				}
+			}
+		});
 		radioResp2.setBackground(Color.LIGHT_GRAY);
 		radioResp2.setBounds(10, 207, 543, 23);
 		add(radioResp2);
 		
 		radioResp3 = new JRadioButton("Respuesta 3");
+		radioResp3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(radioResp3.isSelected()){
+					radioResp2.setSelected(false);
+					radioResp1.setSelected(false);
+				}
+			}
+		});
 		radioResp3.setBackground(Color.LIGHT_GRAY);
 		radioResp3.setBounds(10, 254, 543, 23);
 		add(radioResp3);
@@ -84,10 +109,12 @@ public class PanelPreguntas extends JPanel {
 		this.miConexion = miConexion;
 		this.miConexion.leerPreguntas(misPreguntas);
 		
-		txtPregunta.setText(misPreguntas.get(0).getPregunta());
-		radioResp1.setText(misPreguntas.get(0).getRespuesta1());
-		radioResp2.setText(misPreguntas.get(0).getRespuesta2());
-		radioResp3.setText(misPreguntas.get(0).getRespuesta3());
+		txtPregunta.setText(misPreguntas.get(cont).getPregunta());
+		radioResp1.setText(misPreguntas.get(cont).getRespuesta1());
+		radioResp2.setText(misPreguntas.get(cont).getRespuesta2());
+		radioResp3.setText(misPreguntas.get(cont).getRespuesta3());
+	
+		
 		//System.out.println(misPreguntas.get(0).getPregunta());
 		
 
