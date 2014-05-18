@@ -30,7 +30,7 @@ public class ConexionBBDD {
 		}	
 	}
 	
-	public void leerPreguntas(ArrayList<Pregunta>misPreguntas){
+	public void leerPreguntas(ArrayList<Pregunta> misPreguntas){
 		try{
 			instruccion = (Statement) conexion.createStatement();
 			manejarResultados = instruccion.executeQuery ("SELECT * FROM preguntas");
@@ -46,8 +46,7 @@ public class ConexionBBDD {
 			    questions.setRespuestaValida(manejarResultados.getInt("respuestaValida"));
 			    questions.setIdPregunta(manejarResultados.getInt("idPregunta"));
 			    misPreguntas.add(questions);
-			    System.out.println(misPreguntas.add(questions));
-			   // System.out.println("Obtenidas : "+misPreguntas.size()+" Preguntas y Respuestas");
+			    System.out.println("Obtenidas : "+misPreguntas.size()+" Preguntas y Respuestas");
 
 			}
 		} catch(SQLException e){

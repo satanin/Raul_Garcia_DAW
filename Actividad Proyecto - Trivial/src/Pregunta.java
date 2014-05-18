@@ -27,7 +27,7 @@ public class Pregunta {
 	}
 	
 	public void setIdPregunta(int idPregunta){
-		idPregunta=idPregunta;
+		this.idPregunta=idPregunta;
 	}
 	
 
@@ -36,7 +36,7 @@ public class Pregunta {
 	}
 
 	public void setPregunta(String pregunta) {
-		pregunta = pregunta;
+		this.pregunta = pregunta;
 	}
 
 	public String getRespuesta1() {
@@ -44,7 +44,7 @@ public class Pregunta {
 	}
 
 	public void setRespuesta1(String respuesta1) {
-		respuesta1 = respuesta1;
+		this.respuesta1 = respuesta1;
 	}
 
 	public String getRespuesta2() {
@@ -52,7 +52,7 @@ public class Pregunta {
 	}
 
 	public void setRespuesta2(String respuesta2) {
-		respuesta2 = respuesta2;
+		this.respuesta2 = respuesta2;
 	}
 
 	public String getRespuesta3() {
@@ -60,7 +60,7 @@ public class Pregunta {
 	}
 
 	public void setRespuesta3(String respuesta3) {
-		respuesta3 = respuesta3;
+		this.respuesta3 = respuesta3;
 	}
 
 	public int getRespuestaValida() {
@@ -68,7 +68,7 @@ public class Pregunta {
 	}
 
 	public void setRespuestaValida(int respuestaValida) {
-		respuestaValida = respuestaValida;
+		this.respuestaValida = respuestaValida;
 	}
 	
 	

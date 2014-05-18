@@ -84,11 +84,13 @@ public class PanelPreguntas extends JPanel {
 		this.miConexion = miConexion;
 		this.miConexion.leerPreguntas(misPreguntas);
 		
-		pregunta = misPreguntas.get(1);
-		txtPregunta.setText(pregunta.getPregunta());
+		txtPregunta.setText(misPreguntas.get(0).getPregunta());
+		radioResp1.setText(misPreguntas.get(0).getRespuesta1());
+		radioResp2.setText(misPreguntas.get(0).getRespuesta2());
+		radioResp3.setText(misPreguntas.get(0).getRespuesta3());
 		//System.out.println(misPreguntas.get(0).getPregunta());
 		
-		txtPregunta.repaint();
+
 
 	}
 }
