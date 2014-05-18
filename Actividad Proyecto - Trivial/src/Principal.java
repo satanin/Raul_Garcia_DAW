@@ -30,6 +30,9 @@ public class Principal extends JFrame {
 	private JPanel panelPrincipal;
 	private ConexionBBDD miConexion;
 	private JTable table;
+	private PanelComoJugar miPanelComoJugar;
+	private Creditos misCreditos;
+	private Pregunta pregunta;
 	/**
 	 * Launch the application.
 	 */
@@ -90,9 +93,27 @@ public class Principal extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmAyuda = new JMenuItem("Como Jugar");
+		mntmAyuda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				miPanelComoJugar = new PanelComoJugar();
+				miPanelComoJugar.setBounds(10, 11, 563, 384);
+				contentPane.remove(panelPrincipal);
+				contentPane.add(miPanelComoJugar);
+				contentPane.repaint();
+			}
+		});
 		mnNewMenu_1.add(mntmAyuda);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Cr\u00E9ditos");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				misCreditos = new Creditos();
+				misCreditos.setBounds(10, 11, 563, 384);
+				contentPane.add(misCreditos);
+				contentPane.remove(panelPrincipal);
+				contentPane.repaint();
+			}
+		});
 		mnNewMenu_1.add(mntmNewMenuItem_1);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -140,12 +161,12 @@ public class Principal extends JFrame {
 		));
 		table.setBounds(10, 259, 543, -202);
 		panelPrincipal.add(table);
-		
-		
-		
+	
 	}
 	
 	private void CerrarVentana(){
 		frame.dispose();
 	}
+	
+
 }

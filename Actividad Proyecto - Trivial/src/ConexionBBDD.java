@@ -46,7 +46,9 @@ public class ConexionBBDD {
 			    questions.setRespuestaValida(manejarResultados.getInt("respuestaValida"));
 			    questions.setIdPregunta(manejarResultados.getInt("idPregunta"));
 			    misPreguntas.add(questions);
-			    System.out.println("Obtenidas : "+misPreguntas.size()+" Preguntas y Respuestas");
+			    System.out.println(misPreguntas.add(questions));
+			   // System.out.println("Obtenidas : "+misPreguntas.size()+" Preguntas y Respuestas");
+
 			}
 		} catch(SQLException e){
 			 JOptionPane.showMessageDialog(null,"Error sql no se pueden leer datos");

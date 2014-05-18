@@ -78,6 +78,7 @@ public class PanelPreguntas extends JPanel {
 		
 		Thread miContador = new Thread( new Contador(labelContador));
 		miContador.start();
+		
 			
 		misPreguntas = new ArrayList<Pregunta>();
 		this.miConexion = miConexion;
@@ -85,7 +86,7 @@ public class PanelPreguntas extends JPanel {
 		
 		pregunta = misPreguntas.get(1);
 		txtPregunta.setText(pregunta.getPregunta());
-		System.out.println(misPreguntas.get(0).getPregunta());
+		//System.out.println(misPreguntas.get(0).getPregunta());
 		
 		txtPregunta.repaint();
 

@@ -1,4 +1,5 @@
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 
 public class Contador implements Runnable {
@@ -20,6 +21,9 @@ public class Contador implements Runnable {
 				contarNum--;
 				contar.setText(String.valueOf(contarNum));
 				Thread.sleep( 1000);
+				if (contarNum==0){
+					 JOptionPane.showMessageDialog(null, "Fin de la partida");
+				}
 			}
 		}catch( InterruptedException excepcion ){
 			System.out.println(excepcion);
