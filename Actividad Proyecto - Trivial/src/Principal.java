@@ -23,6 +23,8 @@ public class Principal extends JFrame {
 	private static Principal frame;
 	private Contador miContador;
 	private JLabel labelContador;
+	private PanelPreguntas miPanelPreguntas;
+	private JPanel panelPrincipal;
 	/**
 	 * Launch the application.
 	 */
@@ -57,6 +59,12 @@ public class Principal extends JFrame {
 		JMenuItem mntmInicio = new JMenuItem("Practica Solo");
 		mntmInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				miPanelPreguntas = new PanelPreguntas();
+				miPanelPreguntas.setBounds(10, 11, 563, 384);
+				contentPane.remove(panelPrincipal);
+				contentPane.add(miPanelPreguntas);
+				contentPane.repaint();
 			}
 		});
 		mnNewMenu.add(mntmInicio);
@@ -85,28 +93,22 @@ public class Principal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 563, 384);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		panelPrincipal = new JPanel();
+		panelPrincipal.setBounds(10, 11, 563, 384);
+		contentPane.add(panelPrincipal);
+		panelPrincipal.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Bienvenido a Trivial Duels");
 		lblNewLabel_1.setBounds(146, 5, 286, 31);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		panel.add(lblNewLabel_1);
+		panelPrincipal.add(lblNewLabel_1);
 		
 		labelContador = new JLabel("");
 		labelContador.setForeground(Color.GREEN);
 		labelContador.setHorizontalAlignment(SwingConstants.CENTER);
 		labelContador.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		labelContador.setBounds(215, 285, 132, 14);
-		panel.add(labelContador);
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\RaulG\\git\\Raul_Garcia_DAW\\Actividad Proyecto - Trivial\\assets\\board.JPG"));
-		lblNewLabel.setBounds(0, 0, 583, 406);
-		contentPane.add(lblNewLabel);
+		panelPrincipal.add(labelContador);
 		
 		//Thread subproceso1 = new Thread( new Hilo( "tarea1") );
 		
@@ -119,7 +121,7 @@ public class Principal extends JFrame {
 			}
 		});
 		btnProbarTimer.setBounds(215, 310, 132, 23);
-		panel.add(btnProbarTimer);
+		panelPrincipal.add(btnProbarTimer);
 		
 		
 		
