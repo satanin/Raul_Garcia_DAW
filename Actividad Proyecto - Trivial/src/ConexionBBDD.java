@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -29,19 +30,23 @@ public class ConexionBBDD {
 		}	
 	}
 	
-	public void leerPreguntaRespuestas(){
+	public void leerPreguntas(ArrayList<Pregunta>misPreguntas){
 		try{
 			instruccion = (Statement) conexion.createStatement();
-			manejarResultados = instruccion.executeQuery ("SELECT * FROM pregutnas");
+			manejarResultados = instruccion.executeQuery ("SELECT * FROM preguntas");
 			while (manejarResultados.next()){
-			    questions = new Pregunta(null, null, null, null, null, 0);
+				System.out.println("Leyendo preguntas de la Base de datos");
+			    questions = new Pregunta(null, null, null, null, 0, 0);
 			     //Rellenamos pregunta y respuestas
-			    questions.setPregunta((String)(manejarResultados.getObject("pregunta")));
-			    questions.setRespuesta1((String)(manejarResultados.getObject("respuesta1")));
-			    questions.setRespuesta2((String)(manejarResultados.getObject("respuesta2")));
-			    questions.setRespuesta3((String)(manejarResultados.getObject("respuesta3")));
-			    questions.setRespuestaValida((String)(manejarResultados.getObject("respuestaValida")));
-			    questions.setIdPregunta((int)(manejarResultados.getObject("idPregunta")));
+			    questions.setPregunta(manejarResultados.getString("pregunta"));
+			    System.out.println(manejarResultados.getString("pregunta"));
+			    questions.setRespuesta1(manejarResultados.getString("respuesta1"));
+			    questions.setRespuesta2(manejarResultados.getString("respuesta2"));
+			    questions.setRespuesta3(manejarResultados.getString("respuesta3"));
+			    questions.setRespuestaValida(manejarResultados.getInt("respuestaValida"));
+			    questions.setIdPregunta(manejarResultados.getInt("idPregunta"));
+			    misPreguntas.add(questions);
+			    System.out.println("Obtenidas : "+misPreguntas.size()+" Preguntas y Respuestas");
 			}
 		} catch(SQLException e){
 			 JOptionPane.showMessageDialog(null,"Error sql no se pueden leer datos");

@@ -7,12 +7,13 @@ public class Pregunta {
 	private String respuesta1;
 	private String respuesta2;
 	private String respuesta3;
-	private String respuestaValida;
+	private int respuestaValida;
 	private int idPregunta;
 	private ArrayList <Pregunta> ArrayListdePreguntas= new ArrayList <Pregunta>();
+	private ConexionBBDD miConexion;
 
 
-	public Pregunta(String pregunta, String respuesta1, String respuesta2, String respuesta3, String respuestaValida, int idPregunta) {
+	public Pregunta(String pregunta, String respuesta1, String respuesta2, String respuesta3, int respuestaValida, int idPregunta) {
 		this.pregunta=pregunta;
 		this.respuesta1=respuesta1;
 		this.respuesta2=respuesta2;
@@ -62,11 +63,11 @@ public class Pregunta {
 		respuesta3 = respuesta3;
 	}
 
-	public String getRespuestaValida() {
+	public int getRespuestaValida() {
 		return respuestaValida;
 	}
 
-	public void setRespuestaValida(String respuestaValida) {
+	public void setRespuestaValida(int respuestaValida) {
 		respuestaValida = respuestaValida;
 	}
 	

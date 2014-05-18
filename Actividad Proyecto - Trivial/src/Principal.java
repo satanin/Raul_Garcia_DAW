@@ -15,6 +15,9 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.border.LineBorder;
 
 
 public class Principal extends JFrame {
@@ -25,6 +28,8 @@ public class Principal extends JFrame {
 	private JLabel labelContador;
 	private PanelPreguntas miPanelPreguntas;
 	private JPanel panelPrincipal;
+	private ConexionBBDD miConexion;
+	private JTable table;
 	/**
 	 * Launch the application.
 	 */
@@ -45,6 +50,7 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		miConexion = new ConexionBBDD();
 		
 		setTitle("Trivial Duels");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +66,7 @@ public class Principal extends JFrame {
 		mntmInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				miPanelPreguntas = new PanelPreguntas();
+				miPanelPreguntas = new PanelPreguntas(miConexion);
 				miPanelPreguntas.setBounds(10, 11, 563, 384);
 				contentPane.remove(panelPrincipal);
 				contentPane.add(miPanelPreguntas);
@@ -107,7 +113,7 @@ public class Principal extends JFrame {
 		labelContador.setForeground(new Color(128, 0, 0));
 		labelContador.setHorizontalAlignment(SwingConstants.CENTER);
 		labelContador.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		labelContador.setBounds(215, 268, 132, 31);
+		labelContador.setBounds(215, 308, 132, 31);
 		panelPrincipal.add(labelContador);
 		
 		
@@ -120,8 +126,20 @@ public class Principal extends JFrame {
 				miContador.start();
 			}
 		});
-		btnProbarTimer.setBounds(215, 310, 132, 23);
+		btnProbarTimer.setBounds(215, 350, 132, 23);
 		panelPrincipal.add(btnProbarTimer);
+		
+		table = new JTable();
+		table.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"New column", "New column", "New column"
+			}
+		));
+		table.setBounds(10, 259, 543, -202);
+		panelPrincipal.add(table);
 		
 		
 		

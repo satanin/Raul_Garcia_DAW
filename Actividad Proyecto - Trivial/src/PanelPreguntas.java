@@ -12,17 +12,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 
 public class PanelPreguntas extends JPanel {
 	private JLabel labelContador;
+	private ArrayList<Pregunta> misPreguntas;
+	private ConexionBBDD miConexion;
+	private Pregunta pregunta;
+	private JTextPane txtPregunta;
+	private JRadioButton radioResp1, radioResp2, radioResp3;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelPreguntas() {
-
-
+	public PanelPreguntas(ConexionBBDD miConexion) {
 		setBounds(new Rectangle(10, 11, 563, 384));
 		
 		setBackground(Color.GRAY);
@@ -34,24 +38,24 @@ public class PanelPreguntas extends JPanel {
 		labelTituloPregunta.setBounds(10, 32, 474, 14);
 		add(labelTituloPregunta);
 		
-		JTextPane txtpnAquiIriaEl = new JTextPane();
-		txtpnAquiIriaEl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtpnAquiIriaEl.setEditable(false);
-		txtpnAquiIriaEl.setText("Aqui iria el texto de la pregunta lo que no s\u00E9 es si la pregunta es muy larga que pasar\u00EDa con el texto, quiz\u00E1 deber\u00EDa poner otra cosa");
-		txtpnAquiIriaEl.setBounds(10, 57, 543, 68);
-		add(txtpnAquiIriaEl);
+		txtPregunta = new JTextPane();
+		txtPregunta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtPregunta.setEditable(false);
+		txtPregunta.setText("Aqui iria el texto de la pregunta lo que no s\u00E9 es si la pregunta es muy larga que pasar\u00EDa con el texto, quiz\u00E1 deber\u00EDa poner otra cosa");
+		txtPregunta.setBounds(10, 57, 543, 68);
+		add(txtPregunta);
 		
-		JRadioButton radioResp1 = new JRadioButton("Respuesta 1");
+		radioResp1 = new JRadioButton("Respuesta 1");
 		radioResp1.setBackground(Color.LIGHT_GRAY);
 		radioResp1.setBounds(10, 159, 543, 23);
 		add(radioResp1);
 		
-		JRadioButton radioResp2 = new JRadioButton("Respuesta 2");
+		radioResp2 = new JRadioButton("Respuesta 2");
 		radioResp2.setBackground(Color.LIGHT_GRAY);
 		radioResp2.setBounds(10, 207, 543, 23);
 		add(radioResp2);
 		
-		JRadioButton radioResp3 = new JRadioButton("Respuesta 3");
+		radioResp3 = new JRadioButton("Respuesta 3");
 		radioResp3.setBackground(Color.LIGHT_GRAY);
 		radioResp3.setBounds(10, 254, 543, 23);
 		add(radioResp3);
@@ -75,8 +79,15 @@ public class PanelPreguntas extends JPanel {
 		Thread miContador = new Thread( new Contador(labelContador));
 		miContador.start();
 			
+		misPreguntas = new ArrayList<Pregunta>();
+		this.miConexion = miConexion;
+		this.miConexion.leerPreguntas(misPreguntas);
 		
+		pregunta = misPreguntas.get(1);
+		txtPregunta.setText(pregunta.getPregunta());
+		System.out.println(misPreguntas.get(0).getPregunta());
 		
+		txtPregunta.repaint();
 
 	}
 }
