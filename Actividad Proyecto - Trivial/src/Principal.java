@@ -75,7 +75,7 @@ public class Principal extends JFrame {
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Salir");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CerrarPrograma();
+				CerrarVentana();
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem_2);
@@ -104,13 +104,13 @@ public class Principal extends JFrame {
 		panelPrincipal.add(lblNewLabel_1);
 		
 		labelContador = new JLabel("");
-		labelContador.setForeground(Color.GREEN);
+		labelContador.setForeground(new Color(128, 0, 0));
 		labelContador.setHorizontalAlignment(SwingConstants.CENTER);
 		labelContador.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		labelContador.setBounds(215, 285, 132, 14);
+		labelContador.setBounds(215, 268, 132, 31);
 		panelPrincipal.add(labelContador);
 		
-		//Thread subproceso1 = new Thread( new Hilo( "tarea1") );
+		
 		
 		
 		JButton btnProbarTimer = new JButton("Probar Timer");
@@ -127,7 +127,7 @@ public class Principal extends JFrame {
 		
 	}
 	
-	private void CerrarPrograma(){
+	private void CerrarVentana(){
 		frame.dispose();
 	}
 }
