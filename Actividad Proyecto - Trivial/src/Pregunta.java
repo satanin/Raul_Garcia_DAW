@@ -1,59 +1,69 @@
 
 public class Pregunta {
 	
-	private String Pregunta;
-	private String Respuesta1;
-	private String Respuesta2;
-	private String Respuesta3;
-	private String RespuestaValida;
+	private String pregunta;
+	private String respuesta1;
+	private String respuesta2;
+	private String respuesta3;
+	private int respuestaValida;
+	private int idPregunta;
 
-	public Pregunta(String Pregunta, String Respuesta1, String Respuesta2, String Respuesta3, String RespuestaValida) {
-		this.Pregunta=Pregunta;
-		this.Respuesta1=Respuesta1;
-		this.Respuesta2=Respuesta2;
-		this.Respuesta3=Respuesta3;
-		this.RespuestaValida=RespuestaValida;
+	public Pregunta(String pregunta, String respuesta1, String respuesta2, String respuesta3, int respuestaValida, int idPregunta) {
+		this.pregunta=pregunta;
+		this.respuesta1=respuesta1;
+		this.respuesta2=respuesta2;
+		this.respuesta3=respuesta3;
+		this.respuestaValida=respuestaValida;
+		this.idPregunta=idPregunta;
+	}
+	
+	public int getIdPregunta(){
+		return idPregunta;
+	}
+	
+	public void setIdPregunta(){
+		idPregunta=idPregunta;
 	}
 	
 
 	public String getPregunta() {
-		return Pregunta;
+		return pregunta;
 	}
 
 	public void setPregunta(String pregunta) {
-		Pregunta = pregunta;
+		pregunta = pregunta;
 	}
 
 	public String getRespuesta1() {
-		return Respuesta1;
+		return respuesta1;
 	}
 
 	public void setRespuesta1(String respuesta1) {
-		Respuesta1 = respuesta1;
+		respuesta1 = respuesta1;
 	}
 
 	public String getRespuesta2() {
-		return Respuesta2;
+		return respuesta2;
 	}
 
 	public void setRespuesta2(String respuesta2) {
-		Respuesta2 = respuesta2;
+		respuesta2 = respuesta2;
 	}
 
 	public String getRespuesta3() {
-		return Respuesta3;
+		return respuesta3;
 	}
 
 	public void setRespuesta3(String respuesta3) {
-		Respuesta3 = respuesta3;
+		respuesta3 = respuesta3;
 	}
 
-	public String getRespuestaValida() {
-		return RespuestaValida;
+	public int getRespuestaValida() {
+		return respuestaValida;
 	}
 
-	public void setRespuestaValida(String respuestaValida) {
-		RespuestaValida = respuestaValida;
+	public void setRespuestaValida(int respuestaValida) {
+		respuestaValida = respuestaValida;
 	}
 	
 	
