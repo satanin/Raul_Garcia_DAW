@@ -23,6 +23,10 @@ public class PanelPreguntas extends JPanel {
 	private JTextPane txtPregunta;
 	private JRadioButton radioResp1, radioResp2, radioResp3;
 	private int cont=0;
+	private int respuesta=0;
+	private JLabel labelResultado;
+	private int puntos = 0;
+	private JLabel labelPuntos;
 
 	/**
 	 * Create the panel.
@@ -85,14 +89,7 @@ public class PanelPreguntas extends JPanel {
 		radioResp3.setBounds(10, 254, 543, 23);
 		add(radioResp3);
 		
-		JButton btnSiguiente = new JButton("Siguiente");
-		btnSiguiente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnSiguiente.setBounds(464, 350, 89, 23);
-		add(btnSiguiente);
+		
 		
 		labelContador = new JLabel("30");
 		labelContador.setForeground(Color.WHITE);
@@ -113,11 +110,73 @@ public class PanelPreguntas extends JPanel {
 		radioResp1.setText(misPreguntas.get(cont).getRespuesta1());
 		radioResp2.setText(misPreguntas.get(cont).getRespuesta2());
 		radioResp3.setText(misPreguntas.get(cont).getRespuesta3());
+		
+		labelPuntos = new JLabel("0");
+		labelPuntos.setHorizontalAlignment(SwingConstants.CENTER);
+		labelPuntos.setForeground(Color.WHITE);
+		labelPuntos.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		labelPuntos.setBounds(10, 345, 46, 23);
+		add(labelPuntos);
+		
+		JLabel lblPuntuacion = new JLabel("Puntuaci\u00F3n");
+		lblPuntuacion.setForeground(Color.WHITE);
+		lblPuntuacion.setBounds(10, 320, 73, 14);
+		add(lblPuntuacion);
 	
+		JButton btnSiguiente = new JButton("Siguiente");
+		btnSiguiente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CheckRespuesta();
+				if(cont<misPreguntas.size()){
+					if(misPreguntas.get(cont).getRespuestaValida() == respuesta){
+						labelResultado.setForeground(Color.GREEN);
+						labelResultado.setText("Respuesta Correcta! Sumas 5 puntos!");
+						puntos = puntos +5;
+						labelPuntos.setText(String.valueOf(puntos));
+					}else {
+						labelResultado.setForeground(Color.RED);
+						labelResultado.setText("Respuesta Incorrecta, Pardillo! ");
+						labelPuntos.setText(String.valueOf(puntos));
+					}
+					cont++;
+					resetRadioButtons();
+					txtPregunta.setText(misPreguntas.get(cont).getPregunta());
+					radioResp1.setText(misPreguntas.get(cont).getRespuesta1());
+					radioResp2.setText(misPreguntas.get(cont).getRespuesta2());
+					radioResp3.setText(misPreguntas.get(cont).getRespuesta3());
+				}
+				
+			}
+		});
+		btnSiguiente.setBounds(464, 350, 89, 23);
+		add(btnSiguiente);
+		
+		labelResultado = new JLabel("");
+		labelResultado.setHorizontalAlignment(SwingConstants.CENTER);
+		labelResultado.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		labelResultado.setBounds(10, 284, 543, 25);
+		add(labelResultado);
 		
 		//System.out.println(misPreguntas.get(0).getPregunta());
 		
 
 
+	}
+	
+	private void CheckRespuesta(){
+		
+		if(radioResp1.isSelected()){
+			respuesta = 1;
+		}else if(radioResp2.isSelected()){
+			respuesta = 2;
+		}else{
+			respuesta = 3;
+		}
+	}
+	
+	private void resetRadioButtons(){
+		radioResp1.setSelected(false);
+		radioResp2.setSelected(false);
+		radioResp3.setSelected(false);
 	}
 }
