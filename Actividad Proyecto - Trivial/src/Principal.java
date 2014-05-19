@@ -23,16 +23,16 @@ import javax.swing.border.LineBorder;
 public class Principal extends JFrame {
 
 	private JPanel contentPane;
-	private static Principal frame;
 	private Contador miContador;
 	private JLabel labelContador;
-	private PanelPreguntas miPanelPreguntas;
+	PanelPreguntas miPanelPreguntas;
 	private JPanel panelPrincipal;
 	private ConexionBBDD miConexion;
 	private JTable table;
 	private PanelComoJugar miPanelComoJugar;
 	private Creditos misCreditos;
 	private Pregunta pregunta;
+	private static Principal frame;
 	/**
 	 * Launch the application.
 	 */
@@ -141,9 +141,10 @@ public class Principal extends JFrame {
 		
 		
 		JButton btnProbarTimer = new JButton("Probar Timer");
-		btnProbarTimer.addActionListener(new ActionListener() {
+		btnProbarTimer.addActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Thread miContador = new Thread( new Contador(labelContador));
+				Thread miContador = new Thread( new Contador(labelContador,Principal.getPrincipal()));
 				miContador.start();
 			}
 		});
@@ -164,8 +165,12 @@ public class Principal extends JFrame {
 	
 	}
 	
-	private void CerrarVentana(){
+	public void CerrarVentana(){
 		frame.dispose();
+	}
+	
+	public static Principal getPrincipal(){
+		return frame;
 	}
 	
 

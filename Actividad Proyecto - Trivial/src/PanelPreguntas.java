@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class PanelPreguntas extends JPanel {
@@ -98,13 +99,14 @@ public class PanelPreguntas extends JPanel {
 		labelContador.setBounds(507, 11, 46, 34);
 		add(labelContador);
 		
-		Thread miContador = new Thread( new Contador(labelContador));
+		Thread miContador = new Thread( new Contador(labelContador,Principal.getPrincipal()));
 		miContador.start();
 		
 			
 		misPreguntas = new ArrayList<Pregunta>();
 		this.miConexion = miConexion;
 		this.miConexion.leerPreguntas(misPreguntas);
+
 		
 		txtPregunta.setText(misPreguntas.get(cont).getPregunta());
 		radioResp1.setText(misPreguntas.get(cont).getRespuesta1());
@@ -190,4 +192,12 @@ public class PanelPreguntas extends JPanel {
 		radioResp2.setSelected(false);
 		radioResp3.setSelected(false);
 	}
+	
+//Probando metodo random
+	//	public Pregunta randomMetodo(){
+//		int idx = new Random().nextInt(misPreguntas.size());
+//		Pregunta panel = misPreguntas.get(idx);
+//		System.out.println("aleatorio" +misPreguntas.size());
+//		return panel;
+//	}
 }

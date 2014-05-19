@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 
@@ -14,6 +15,7 @@ public class ConexionBBDD {
 	private Statement instruccion = null;
 	private ResultSet manejarResultados = null;
 	private Pregunta questions;
+
 
 
 	public ConexionBBDD() {
@@ -53,6 +55,7 @@ public class ConexionBBDD {
 			 JOptionPane.showMessageDialog(null,"Error sql no se pueden leer datos");
 		  }
 	}
+
 
 
 }

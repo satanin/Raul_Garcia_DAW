@@ -35,11 +35,16 @@ public class FinDePartida extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ventanaInicio = new Principal();
-				FinDePartida frame = new FinDePartida();
+				FinDePartida frame = new FinDePartida();		
 				
-				ventanaInicio.main(null);
-				ventanaInicio.CerrarVentana();
-				frame.dispose();
+				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				//f.removeAll();
+				//f.remove(f);
+				//contentPane.remove(frame);
+				//frame.dispose();
+				//frame.remove(frame);
+				//frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				//frame.setVisible(false);
 
 			}
 		});

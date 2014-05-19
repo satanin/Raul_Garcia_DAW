@@ -8,11 +8,13 @@ public class Contador implements Runnable {
 	private int contarNum=3;
 	private String nombreTarea;
 	private FinDePartida finalPartida;
+	private Principal p;
 
 	
-	public Contador(JLabel contar){
+	public Contador(JLabel contar, Principal p){
 		nombreTarea = "Contador";
 		this.contar=contar;	
+		this.p=p;
 		
 	}
 	
@@ -26,6 +28,8 @@ public class Contador implements Runnable {
 					try {
 						FinDePartida frame = new FinDePartida();
 						frame.setVisible(true);
+						this.p.remove(this.p.miPanelPreguntas);
+						this.p.repaint();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
