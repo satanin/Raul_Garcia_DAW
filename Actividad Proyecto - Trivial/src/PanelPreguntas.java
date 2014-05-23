@@ -135,6 +135,7 @@ public class PanelPreguntas extends JPanel {
 				}else {
 					System.out.println("contador: "+cont+", Size: "+misPreguntas.size());
 					if(cont<misPreguntas.size()){
+						//hola
 						if(misPreguntas.get(cont).getRespuestaValida() == respuesta){
 							labelResultado.setForeground(Color.GREEN);
 							labelResultado.setText("Respuesta Correcta! Sumas 5 puntos!");

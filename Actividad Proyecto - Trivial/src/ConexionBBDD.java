@@ -23,8 +23,10 @@ public class ConexionBBDD {
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			// conectamos con la BBDD
+
 			conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1/trivial", "trivial","z62cbY9LcsLY4vQj");
 			System.out.println("Base de datos conectada");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost/trivial","root","tonphp");
 		}catch( SQLException excepcionSql ){
 			excepcionSql.printStackTrace();
 		}
