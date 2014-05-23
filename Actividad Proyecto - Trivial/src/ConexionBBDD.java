@@ -16,6 +16,7 @@ public class ConexionBBDD {
 	private ResultSet manejarResultados = null;
 	private Pregunta questions;
 
+//conectar en local desde Florida "jdbc:mysql://localhost/trivial","root","tonphp"
 
 
 	public ConexionBBDD() {
