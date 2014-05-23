@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Random;
+
 
 
 public class Pregunta {
@@ -11,6 +13,7 @@ public class Pregunta {
 	private int idPregunta;
 	private ArrayList <Pregunta> ArrayListdePreguntas= new ArrayList <Pregunta>();
 	private ConexionBBDD miConexion;
+	private Random aleatorio;
 
 
 	public Pregunta(String pregunta, String respuesta1, String respuesta2, String respuesta3, int respuestaValida, int idPregunta) {
@@ -71,6 +74,10 @@ public class Pregunta {
 		this.respuestaValida = respuestaValida;
 	}
 	
-	
+	public Pregunta preguntaAleatoria(){
+		int index = aleatorio.nextInt(ArrayListdePreguntas.size()); 
+		Pregunta item = ArrayListdePreguntas.get(index);
+		return item;
+	}
 
 }

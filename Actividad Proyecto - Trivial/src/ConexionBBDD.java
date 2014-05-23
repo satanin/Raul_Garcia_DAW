@@ -16,13 +16,13 @@ public class ConexionBBDD {
 	private ResultSet manejarResultados = null;
 	private Pregunta questions;
 
-
+//conectar en local desde Florida "jdbc:mysql://localhost/trivial","root","tonphp"
 
 	public ConexionBBDD() {
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			// conectamos con la BBDD
-			conexion = DriverManager.getConnection("jdbc:mysql://satanin.myftp.org/trivial", "trivial","z62cbY9LcsLY4vQj");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost/trivial","root","tonphp");
 		}catch( SQLException excepcionSql ){
 			excepcionSql.printStackTrace();
 		}
