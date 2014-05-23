@@ -36,7 +36,7 @@ public class FinDePartida extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				 JButton btn=(JButton)arg0.getSource();
-	                FinDePartida fin=(FinDePartida)SwingUtilities.getRoot(btn);;
+	                FinDePartida fin=(FinDePartida)SwingUtilities.getRoot(btn);
 	                fin.dispose();
 
 			}
