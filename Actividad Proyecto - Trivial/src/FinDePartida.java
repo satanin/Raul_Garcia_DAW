@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -34,17 +35,9 @@ public class FinDePartida extends JFrame {
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ventanaInicio = new Principal();
-				FinDePartida frame = new FinDePartida();		
-				
-				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				//f.removeAll();
-				//f.remove(f);
-				//contentPane.remove(frame);
-				//frame.dispose();
-				//frame.remove(frame);
-				//frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-				//frame.setVisible(false);
+				 JButton btn=(JButton)arg0.getSource();
+	                FinDePartida fin=(FinDePartida)SwingUtilities.getRoot(btn);;
+	                fin.dispose();
 
 			}
 		});
