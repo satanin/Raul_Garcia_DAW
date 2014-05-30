@@ -7,17 +7,19 @@ import javax.swing.JOptionPane;
 public class Contador implements Runnable {
 	private JLabel contar;
 	private volatile boolean isRunning = true;
-	private int contarNum=3;
+	private int contarNum=10;
 	private String nombreTarea;
 	private FinDePartida finalPartida;
 	private Principal p;
+	private PanelPreguntas pPreguntas2;
+	
 
 	
-	public Contador(JLabel contar, Principal p){
+	public Contador(JLabel contar, Principal p, PanelPreguntas pPreguntas){
 		nombreTarea = "Contador";
 		this.contar=contar;	
 		this.p=p;
-		
+		pPreguntas2 = pPreguntas;
 	}
 	
 	public void run(){
@@ -30,7 +32,7 @@ public class Contador implements Runnable {
             EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     try {
-                        FinDePartida frame = new FinDePartida();
+                        FinDePartida frame = new FinDePartida(pPreguntas2);
                         frame.setVisible(true);
                         Principal.getPrincipal().remove(Principal.getPrincipal().miPanelPreguntas);
                         Principal.getPrincipal().repaint();

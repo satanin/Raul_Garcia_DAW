@@ -24,7 +24,7 @@ public class FinDePartida extends JFrame {
 
 	
 
-	public FinDePartida() {
+	public FinDePartida(PanelPreguntas pPreguntas) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 358, 191);
 		contentPane = new JPanel();
@@ -51,14 +51,18 @@ public class FinDePartida extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Puntuaci\u00F3n final:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(34, 55, 101, 14);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_1.setBounds(20, 45, 132, 35);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblPuntos = new JLabel("");
-		lblPuntos.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPuntos.setBounds(145, 41, 34, 28);
+		lblPuntos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPuntos.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblPuntos.setBounds(164, 48, 34, 28);
 		contentPane.add(lblPuntos);
+		
+		lblPuntos.setText(String.valueOf(pPreguntas.getPuntos()));
+		
 	}
 	
 }

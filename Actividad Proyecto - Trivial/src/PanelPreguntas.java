@@ -13,12 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 
 public class PanelPreguntas extends JPanel {
 	private JLabel labelContador;
-	private ArrayList<Pregunta> misPreguntas;
+	private ArrayList<Pregunta> misPreguntas, misPreguntasRandom;
 	private ConexionBBDD miConexion;
 	private Pregunta pregunta;
 	private JTextPane txtPregunta;
@@ -28,11 +29,14 @@ public class PanelPreguntas extends JPanel {
 	private JLabel labelResultado;
 	private int puntos = 0;
 	private JLabel labelPuntos;
+	private PanelPreguntas panelPreguntas;
+	private Random aleatorio;
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelPreguntas(ConexionBBDD miConexion) {
+		this.panelPreguntas=this;
 		setBounds(new Rectangle(10, 11, 563, 384));
 		
 		setBackground(Color.GRAY);
@@ -99,14 +103,15 @@ public class PanelPreguntas extends JPanel {
 		labelContador.setBounds(507, 11, 46, 34);
 		add(labelContador);
 		
-		Thread miContador = new Thread( new Contador(labelContador,Principal.getPrincipal()));
+		Thread miContador = new Thread( new Contador(labelContador,Principal.getPrincipal(), this.panelPreguntas));
 		miContador.start();
 		
 			
 		misPreguntas = new ArrayList<Pregunta>();
 		this.miConexion = miConexion;
 		this.miConexion.leerPreguntas(misPreguntas);
-
+		System.out.println(misPreguntas.size());
+		misPreguntas = preguntasAleatorias(misPreguntas);
 		
 		txtPregunta.setText(misPreguntas.get(cont).getPregunta());
 		radioResp1.setText(misPreguntas.get(cont).getRespuesta1());
@@ -194,11 +199,17 @@ public class PanelPreguntas extends JPanel {
 		radioResp3.setSelected(false);
 	}
 	
-//Probando metodo random
-	//	public Pregunta randomMetodo(){
-//		int idx = new Random().nextInt(misPreguntas.size());
-//		Pregunta panel = misPreguntas.get(idx);
-//		System.out.println("aleatorio" +misPreguntas.size());
-//		return panel;
-//	}
+	public int getPuntos(){
+		return puntos;
+	}
+	
+	public ArrayList<Pregunta> preguntasAleatorias(ArrayList<Pregunta> misPreguntas){
+		
+		System.out.println("Tengo "+misPreguntas.size()+" preguntas en misPreguntas");
+		long seed = System.nanoTime();
+		System.out.println("Cambiando el orden de las preguntas...");
+		Collections.shuffle(misPreguntas, new Random(seed));
+		return misPreguntas;
+	}
+
 }

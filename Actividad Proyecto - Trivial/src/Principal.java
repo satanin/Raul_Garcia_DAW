@@ -10,14 +10,20 @@ import javax.swing.JMenu;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.border.LineBorder;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.border.TitledBorder;
 
 
 public class Principal extends JFrame {
@@ -25,7 +31,7 @@ public class Principal extends JFrame {
 	private JPanel contentPane;
 	private Contador miContador;
 	private JLabel labelContador;
-	PanelPreguntas miPanelPreguntas;
+	public PanelPreguntas miPanelPreguntas;
 	private JPanel panelPrincipal;
 	private ConexionBBDD miConexion;
 	private JTable table;
@@ -33,6 +39,13 @@ public class Principal extends JFrame {
 	private Creditos misCreditos;
 	private Pregunta pregunta;
 	private static Principal frame;
+	private JTable table_1;
+	private ArrayList<JPanel> misComponentesActivos;
+	private JTextField textFieldUser;
+	private JPasswordField passwordField;
+	private JPanel panelLogin;
+	private JLabel lblUserLogged;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -53,6 +66,7 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		misComponentesActivos = new ArrayList<JPanel>();
 		miConexion = new ConexionBBDD();
 		
 		setTitle("Trivial Duels");
@@ -71,9 +85,9 @@ public class Principal extends JFrame {
 				
 				miPanelPreguntas = new PanelPreguntas(miConexion);
 				miPanelPreguntas.setBounds(10, 11, 563, 384);
-				contentPane.remove(panelPrincipal);
-				contentPane.add(miPanelPreguntas);
-				contentPane.repaint();
+				misComponentesActivos.add(miPanelPreguntas);
+				limpiarVentana(miPanelPreguntas,misComponentesActivos);
+
 			}
 		});
 		mnNewMenu.add(mntmInicio);
@@ -97,9 +111,8 @@ public class Principal extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				miPanelComoJugar = new PanelComoJugar();
 				miPanelComoJugar.setBounds(10, 11, 563, 384);
-				contentPane.remove(panelPrincipal);
-				contentPane.add(miPanelComoJugar);
-				contentPane.repaint();
+				misComponentesActivos.add(miPanelComoJugar);
+				limpiarVentana(miPanelComoJugar, misComponentesActivos);
 			}
 		});
 		mnNewMenu_1.add(mntmAyuda);
@@ -109,9 +122,8 @@ public class Principal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				misCreditos = new Creditos();
 				misCreditos.setBounds(10, 11, 563, 384);
-				contentPane.add(misCreditos);
-				contentPane.remove(panelPrincipal);
-				contentPane.repaint();
+				misComponentesActivos.add(misCreditos);
+				limpiarVentana(misCreditos, misComponentesActivos);
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_1);
@@ -124,6 +136,8 @@ public class Principal extends JFrame {
 		panelPrincipal.setBounds(10, 11, 563, 384);
 		contentPane.add(panelPrincipal);
 		panelPrincipal.setLayout(null);
+		misComponentesActivos.add(panelPrincipal);
+		
 		
 		JLabel lblNewLabel_1 = new JLabel("Bienvenido a Trivial Duels");
 		lblNewLabel_1.setBounds(146, 5, 286, 31);
@@ -137,20 +151,6 @@ public class Principal extends JFrame {
 		labelContador.setBounds(215, 308, 132, 31);
 		panelPrincipal.add(labelContador);
 		
-		
-		
-		
-		JButton btnProbarTimer = new JButton("Probar Timer");
-		btnProbarTimer.addActionListener(
-			new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Thread miContador = new Thread( new Contador(labelContador,Principal.getPrincipal()));
-				miContador.start();
-			}
-		});
-		btnProbarTimer.setBounds(215, 350, 132, 23);
-		panelPrincipal.add(btnProbarTimer);
-		
 		table = new JTable();
 		table.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		table.setModel(new DefaultTableModel(
@@ -162,6 +162,69 @@ public class Principal extends JFrame {
 		));
 		table.setBounds(10, 259, 543, -202);
 		panelPrincipal.add(table);
+		
+		table_1 = new JTable();
+		table_1.setBounds(294, 95, 230, 256);
+		panelPrincipal.add(table_1);
+		
+		JLabel lblHighScores = new JLabel("High Scores");
+		lblHighScores.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblHighScores.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHighScores.setBounds(190, 49, 192, 33);
+		panelPrincipal.add(lblHighScores);
+		
+		panelLogin = new JPanel();
+		panelLogin.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Logueate para Guardar Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelLogin.setBounds(12, 131, 249, 204);
+		panelPrincipal.add(panelLogin);
+		panelLogin.setLayout(null);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(31, 131, 116, 22);
+		panelLogin.add(passwordField);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(31, 102, 55, 16);
+		panelLogin.add(lblPassword);
+		
+		textFieldUser = new JTextField();
+		textFieldUser.setBounds(31, 67, 116, 22);
+		panelLogin.add(textFieldUser);
+		textFieldUser.setColumns(10);
+		
+		JButton btnLogin = new JButton("Login");
+		btnLogin.setBounds(31, 166, 63, 25);
+		panelLogin.add(btnLogin);
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean conectado = miConexion.getLogin(textFieldUser.getText(),String.valueOf(passwordField.getPassword()));
+				System.out.println(conectado);
+				if (conectado==true){
+					lblUserLogged.setText(textFieldUser.getText());
+					panelPrincipal.remove(panelLogin);
+					contentPane.repaint();
+					
+					
+				}
+			}
+		});
+		
+		JLabel lblNombreDeUsuario = new JLabel("Nombre de Usuario");
+		lblNombreDeUsuario.setBounds(31, 38, 110, 16);
+		panelLogin.add(lblNombreDeUsuario);
+		
+		JLabel lblLogueadoComo = new JLabel("Logueado Como: ");
+		lblLogueadoComo.setBounds(31, 131, 110, 16);
+		panelPrincipal.add(lblLogueadoComo);
+		
+		lblUserLogged = new JLabel("");
+		lblUserLogged.setBounds(138, 131, 56, 16);
+		panelPrincipal.add(lblUserLogged);
+		
+		System.out.println(panelPrincipal.isEnabled());
+//		System.out.println(misCreditos.isEnabled());
+//		System.out.println(miPanelPreguntas.isEnabled());
+//		System.out.println(miPanelComoJugar.isEnabled());
 	
 	}
 	
@@ -173,5 +236,45 @@ public class Principal extends JFrame {
 		return frame;
 	}
 	
+	private void limpiarVentana(JPanel miVentanaActual, ArrayList<JPanel> misComponentesActivos){
+		
+		if(miVentanaActual == miPanelPreguntas){
+			for(int i=0;i<misComponentesActivos.size();i++){
+				contentPane.remove(misComponentesActivos.get(i));
+				misComponentesActivos.remove(i);
+			}
 
+			contentPane.add(miPanelPreguntas);
+			contentPane.repaint();
+			
+		}else if(miVentanaActual == miPanelComoJugar){
+			for(int i=0;i<misComponentesActivos.size();i++){
+				contentPane.remove(misComponentesActivos.get(i));
+				misComponentesActivos.remove(i);
+			}
+			
+			contentPane.add(miPanelComoJugar);
+			contentPane.repaint();
+			
+		}else if(miVentanaActual == misCreditos){
+			for(int i=0;i<misComponentesActivos.size();i++){
+				contentPane.remove(misComponentesActivos.get(i));
+				misComponentesActivos.remove(i);
+			}
+			
+			contentPane.add(misCreditos);
+			contentPane.repaint();
+			
+		}
+//		else if(miVentanaActual == miPanelDuelo){
+//			for(int i=0;i<misComponentesActivos.size();i++){
+//				contentPane.remove(misComponentesActivos.get(i));
+//				misComponentesActivos.remove(i);
+//			}
+//			
+//			contentPane.add(miPanelDuelo);
+//			contentPane.repaint();
+//		}
+		
+	}
 }
