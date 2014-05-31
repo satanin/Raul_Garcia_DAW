@@ -28,13 +28,11 @@ import javax.swing.border.TitledBorder;
 
 public class Principal extends JFrame {
 
-	private JPanel contentPane;
 	private Contador miContador;
-	private JLabel labelContador;
+	private JLabel labelContador,lblUserLogged;
 	public PanelPreguntas miPanelPreguntas;
-	private JPanel panelPrincipal;
+	private JPanel contentPane,panelPrincipal,miPanelMultiPlayer,panelLogin;
 	private ConexionBBDD miConexion;
-	private JTable table;
 	private PanelComoJugar miPanelComoJugar;
 	private Creditos misCreditos;
 	private Pregunta pregunta;
@@ -43,8 +41,6 @@ public class Principal extends JFrame {
 	private ArrayList<JPanel> misComponentesActivos;
 	private JTextField textFieldUser;
 	private JPasswordField passwordField;
-	private JPanel panelLogin;
-	private JLabel lblUserLogged;
 	
 	/**
 	 * Launch the application.
@@ -92,7 +88,15 @@ public class Principal extends JFrame {
 		});
 		mnNewMenu.add(mntmInicio);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Duelo");
+		JMenuItem mntmNewMenuItem = new JMenuItem("Multiplayer");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				miPanelMultiPlayer = new PanelMultiPlayer(miConexion);
+				miPanelMultiPlayer.setBounds(10, 11, 563, 384);
+				misComponentesActivos.add(miPanelMultiPlayer);
+				limpiarVentana(miPanelMultiPlayer,misComponentesActivos);
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Salir");
@@ -151,18 +155,6 @@ public class Principal extends JFrame {
 		labelContador.setBounds(215, 308, 132, 31);
 		panelPrincipal.add(labelContador);
 		
-		table = new JTable();
-		table.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"New column", "New column", "New column"
-			}
-		));
-		table.setBounds(10, 259, 543, -202);
-		panelPrincipal.add(table);
-		
 		table_1 = new JTable();
 		table_1.setBounds(294, 95, 230, 256);
 		panelPrincipal.add(table_1);
@@ -174,7 +166,7 @@ public class Principal extends JFrame {
 		panelPrincipal.add(lblHighScores);
 		
 		panelLogin = new JPanel();
-		panelLogin.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Logueate para Guardar Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelLogin.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Logueate para Guardar Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelLogin.setBounds(12, 131, 249, 204);
 		panelPrincipal.add(panelLogin);
 		panelLogin.setLayout(null);
@@ -237,44 +229,11 @@ public class Principal extends JFrame {
 	}
 	
 	private void limpiarVentana(JPanel miVentanaActual, ArrayList<JPanel> misComponentesActivos){
-		
-		if(miVentanaActual == miPanelPreguntas){
-			for(int i=0;i<misComponentesActivos.size();i++){
-				contentPane.remove(misComponentesActivos.get(i));
-				misComponentesActivos.remove(i);
-			}
-
-			contentPane.add(miPanelPreguntas);
-			contentPane.repaint();
-			
-		}else if(miVentanaActual == miPanelComoJugar){
-			for(int i=0;i<misComponentesActivos.size();i++){
-				contentPane.remove(misComponentesActivos.get(i));
-				misComponentesActivos.remove(i);
-			}
-			
-			contentPane.add(miPanelComoJugar);
-			contentPane.repaint();
-			
-		}else if(miVentanaActual == misCreditos){
-			for(int i=0;i<misComponentesActivos.size();i++){
-				contentPane.remove(misComponentesActivos.get(i));
-				misComponentesActivos.remove(i);
-			}
-			
-			contentPane.add(misCreditos);
-			contentPane.repaint();
-			
+		for (int i=0;i<misComponentesActivos.size();i++){
+			contentPane.remove(misComponentesActivos.get(i));
+			misComponentesActivos.remove(i);
 		}
-//		else if(miVentanaActual == miPanelDuelo){
-//			for(int i=0;i<misComponentesActivos.size();i++){
-//				contentPane.remove(misComponentesActivos.get(i));
-//				misComponentesActivos.remove(i);
-//			}
-//			
-//			contentPane.add(miPanelDuelo);
-//			contentPane.repaint();
-//		}
-		
+		contentPane.add(miVentanaActual);
+		contentPane.repaint();
 	}
 }
