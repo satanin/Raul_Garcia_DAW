@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -34,6 +35,7 @@ public class Contador implements Runnable {
                     try {
                         FinDePartida frame = new FinDePartida(pPreguntas2);
                         frame.setVisible(true);
+                        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         Principal.getPrincipal().remove(Principal.getPrincipal().miPanelPreguntas);
                         Principal.getPrincipal().repaint();
                     } catch (Exception e) {

@@ -162,7 +162,7 @@ public class Principal extends JFrame {
 		JLabel lblHighScores = new JLabel("High Scores");
 		lblHighScores.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblHighScores.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHighScores.setBounds(190, 49, 192, 33);
+		lblHighScores.setBounds(344, 47, 192, 33);
 		panelPrincipal.add(lblHighScores);
 		
 		panelLogin = new JPanel();
@@ -176,7 +176,7 @@ public class Principal extends JFrame {
 		panelLogin.add(passwordField);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(31, 102, 55, 16);
+		lblPassword.setBounds(31, 102, 75, 16);
 		panelLogin.add(lblPassword);
 		
 		textFieldUser = new JTextField();
@@ -185,7 +185,7 @@ public class Principal extends JFrame {
 		textFieldUser.setColumns(10);
 		
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(31, 166, 63, 25);
+		btnLogin.setBounds(31, 166, 75, 25);
 		panelLogin.add(btnLogin);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
