@@ -3,6 +3,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 
 public class Cliente {
@@ -11,6 +12,7 @@ public class Cliente {
 	private String servidor; // aloja al servidor para esta aplicación
 	private ObjectOutputStream salida; // flujo de salida hacia el servidor
 	private ObjectInputStream entrada; // flujo de entrada del servidor
+	private PanelPreguntas objetoPreguntas;
 	
 	public Cliente(String host) {
 		servidor = host; // establece el servidor al que se conecta este cliente
@@ -44,13 +46,15 @@ public class Cliente {
 	}// fin del método obtenerFlujos
 	
 	// envía un mensaje al servidor
-	public void enviarDatos( String mensaje )
+	public void enviarDatos( ArrayList <Pregunta> misPreguntas )
 	{
 		try// envía un objeto al servidor
 		{
-			salida.writeObject("CLIENTE>>> "+ mensaje );
+			objetoPreguntas.preguntasAleatorias(misPreguntas);
+			
+			salida.writeObject("CLIENTE>>> "+ objetoPreguntas.preguntasAleatorias(misPreguntas) );
 			salida.flush();// envía todos los datos a la salida
-			System.out.println("\nCLIENTE>>> "+ mensaje );
+			System.out.println("\nCLIENTE>>> "+ objetoPreguntas.preguntasAleatorias(misPreguntas) );
 		}// fin de try
 		catch( IOException excepcionES )
 		{

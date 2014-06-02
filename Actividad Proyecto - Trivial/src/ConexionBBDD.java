@@ -24,9 +24,9 @@ public class ConexionBBDD {
 			Class.forName("com.mysql.jdbc.Driver");
 			// conectamos con la BBDD
 
-			conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1/trivial", "trivial","z62cbY9LcsLY4vQj");
+			//conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1/trivial", "trivial","z62cbY9LcsLY4vQj");
 			System.out.println("Base de datos conectada");
-			//conexion = DriverManager.getConnection("jdbc:mysql://localhost/trivial","root","tonphp");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost/trivial","root","");
 		}catch( SQLException excepcionSql ){
 			excepcionSql.printStackTrace();
 		}
@@ -65,17 +65,20 @@ public class ConexionBBDD {
 		try{
 			instruccion = (Statement) conexion.createStatement();
 			System.out.println(("SELECT * FROM users WHERE `username`='"+user+"' AND `password`="+password));
-			manejarResultados = instruccion.executeQuery ("SELECT * FROM users WHERE `username`='"+user+"' AND `password`="+password);
+			manejarResultados = instruccion.executeQuery ("SELECT * FROM users WHERE `username`='"+user+"' AND `password`='"+user+"'");
 			System.out.println("Leyendo usuario de la base de datos");
-			conectado = true;
+			manejarResultados.last();
+			if (manejarResultados.getRow()>0)
+				conectado = true;
+			else
+				conectado=false;
 			
 		} catch(SQLException e){
 			 JOptionPane.showMessageDialog(null,"No se ha podido autenticar al usuario");
+			 return conectado;
 		  }
 		
 		return conectado;
 	}
-
-
-
+	
 }
