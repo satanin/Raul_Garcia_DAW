@@ -29,10 +29,11 @@ public class Cliente {
 		cliente = new Socket( InetAddress.getByName( servidor ), 12345);
 		// muestra la información de la conexión
 		System.out.println("Conectado a: "+ cliente.getInetAddress().getHostName() );
+		lblClienteOnline.setText("Online");
+		lblClienteOnline.setForeground(Color.GREEN);
 		try{
 			obtenerFlujos();
-			lblClienteOnline.setText("Online");
-			lblClienteOnline.setForeground(Color.GREEN);
+
 		}catch(IOException exception){
 			System.out.println(exception);
 		}
