@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 
 public class ConexionBBDD {
@@ -65,13 +68,14 @@ public class ConexionBBDD {
 		try{
 			instruccion = (Statement) conexion.createStatement();
 			System.out.println(("SELECT * FROM users WHERE `username`='"+user+"' AND `password`="+password));
-			manejarResultados = instruccion.executeQuery ("SELECT * FROM users WHERE `username`='"+user+"' AND `password`='"+user+"'");
+			manejarResultados = instruccion.executeQuery ("SELECT * FROM users WHERE `username`='"+user+"' AND `password`='"+password+"'");
 			System.out.println("Leyendo usuario de la base de datos");
 			manejarResultados.last();
 			if (manejarResultados.getRow()>0)
 				conectado = true;
 			else
 				conectado=false;
+				
 			
 		} catch(SQLException e){
 			 JOptionPane.showMessageDialog(null,"No se ha podido autenticar al usuario");
@@ -79,6 +83,48 @@ public class ConexionBBDD {
 		  }
 		
 		return conectado;
+	}
+	
+	public void getScores(DefaultTableModel topScores){
+		try{
+			instruccion = (Statement) conexion.createStatement();
+			System.out.println(("SELECT * FROM puntuaciones"));
+			manejarResultados = instruccion.executeQuery ("SELECT usuario,puntos FROM puntuaciones ORDER BY puntos DESC");
+			System.out.println("Leyendo usuario de la base de datos");
+			Object rankings[] = new Object[3];
+			int j=0;
+			int pos=1;
+			while(manejarResultados.next()){
+				rankings[j]=pos;
+				for(int i=1;i<3;i++){
+					rankings[i]=manejarResultados.getObject(i);
+					}
+				
+				topScores.addRow(rankings);
+				pos++;
+				System.out.println(j);
+			}
+				
+			
+		} catch(SQLException e){
+			 JOptionPane.showMessageDialog(null,"No se ha podido autenticar al usuario");
+		  }		
+	}
+	
+	public void guardarPuntos(String usuario, String puntos){
+		try{
+			instruccion = (Statement) conexion.createStatement();
+			System.out.println("INSERT INTO `puntuaciones` (`usuario`, `puntos`) VALUES ('"+usuario+"','"+puntos+"')");
+			
+			String consulta = "INSERT INTO `puntuaciones` (`usuario`, `puntos`)";
+			consulta = consulta + "VALUES ('"+usuario+"','"+puntos+"')";
+			instruccion.executeUpdate(consulta);
+				
+			
+		} catch(SQLException e){
+			 e.printStackTrace();
+			 JOptionPane.showMessageDialog(null,("Fallo"));
+		  }		
 	}
 	
 }

@@ -13,6 +13,7 @@ public class Contador implements Runnable {
 	private FinDePartida finalPartida;
 	private Principal p;
 	private PanelPreguntas pPreguntas2;
+	private ConexionBBDD miConexion;
 	
 
 	
@@ -21,6 +22,7 @@ public class Contador implements Runnable {
 		this.contar=contar;	
 		this.p=p;
 		pPreguntas2 = pPreguntas;
+		this.miConexion=pPreguntas2.getConexion();
 	}
 	
 	public void run(){
@@ -32,7 +34,7 @@ public class Contador implements Runnable {
             }
             EventQueue.invokeLater(new Runnable() {
                 public void run() {
-                    try {
+                    try {                  	
                         FinDePartida frame = new FinDePartida(pPreguntas2);
                         frame.setVisible(true);
                         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

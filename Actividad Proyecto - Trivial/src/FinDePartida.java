@@ -21,6 +21,7 @@ public class FinDePartida extends JFrame {
 	private JPanel contentPane;
 	private PanelPreguntas pPreguntas;
 	private Principal ventanaInicio;
+	private ConexionBBDD miConexion;
 
 	
 
@@ -62,7 +63,9 @@ public class FinDePartida extends JFrame {
 		contentPane.add(lblPuntos);
 		
 		lblPuntos.setText(String.valueOf(pPreguntas.getPuntos()));
-		
+        miConexion = pPreguntas.getConexion();
+        miConexion.guardarPuntos(pPreguntas.getUsuario(),String.valueOf(pPreguntas.getPuntos()));  
+
 	}
 	
 }

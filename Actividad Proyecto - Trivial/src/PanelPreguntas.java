@@ -31,11 +31,13 @@ public class PanelPreguntas extends JPanel {
 	private JLabel labelPuntos;
 	private PanelPreguntas panelPreguntas;
 	private Random aleatorio;
+	private String usuario;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelPreguntas(ConexionBBDD miConexion) {
+	public PanelPreguntas(ConexionBBDD miConexion, String usuario) {
+		this.usuario = usuario;
 		this.panelPreguntas=this;
 		setBounds(new Rectangle(10, 11, 563, 384));
 		
@@ -211,5 +213,11 @@ public class PanelPreguntas extends JPanel {
 		Collections.shuffle(misPreguntas, new Random(seed));
 		return misPreguntas;
 	}
-
+	
+	public String getUsuario(){
+		return usuario;
+	}
+	public ConexionBBDD getConexion(){
+		return miConexion;
+	}
 }

@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import java.awt.Font;
@@ -24,12 +25,16 @@ import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.border.TitledBorder;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class Principal extends JFrame {
 
 	private Contador miContador;
-	private JLabel labelContador,lblUserLogged;
+	private JLabel lblUserLogged,labelError;
 	public PanelPreguntas miPanelPreguntas;
 	private JPanel contentPane,panelPrincipal,miPanelMultiPlayer,panelLogin;
 	private ConexionBBDD miConexion;
@@ -37,10 +42,11 @@ public class Principal extends JFrame {
 	private Creditos misCreditos;
 	private Pregunta pregunta;
 	private static Principal frame;
-	private JTable table_1;
+	private JTable topScores;
 	private ArrayList<JPanel> misComponentesActivos;
 	private JTextField textFieldUser;
 	private JPasswordField passwordField;
+	private DefaultTableModel miTableModel;
 	
 	/**
 	 * Launch the application.
@@ -62,6 +68,15 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent arg0) {
+				
+				System.out.println("OLA K ASE");
+				contentPane.add(panelPrincipal);
+				contentPane.repaint();
+			}
+		});
 		misComponentesActivos = new ArrayList<JPanel>();
 		miConexion = new ConexionBBDD();
 		
@@ -79,7 +94,7 @@ public class Principal extends JFrame {
 		mntmInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				miPanelPreguntas = new PanelPreguntas(miConexion);
+				miPanelPreguntas = new PanelPreguntas(miConexion, lblUserLogged.getText());
 				miPanelPreguntas.setBounds(10, 11, 563, 384);
 				misComponentesActivos.add(miPanelPreguntas);
 				limpiarVentana(miPanelPreguntas,misComponentesActivos);
@@ -148,16 +163,8 @@ public class Principal extends JFrame {
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelPrincipal.add(lblNewLabel_1);
 		
-		labelContador = new JLabel("");
-		labelContador.setForeground(new Color(128, 0, 0));
-		labelContador.setHorizontalAlignment(SwingConstants.CENTER);
-		labelContador.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		labelContador.setBounds(215, 308, 132, 31);
-		panelPrincipal.add(labelContador);
+		miTableModel = new DefaultTableModel(null, tableModel());
 		
-		table_1 = new JTable();
-		table_1.setBounds(294, 95, 230, 256);
-		panelPrincipal.add(table_1);
 		
 		JLabel lblHighScores = new JLabel("High Scores");
 		lblHighScores.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -167,7 +174,7 @@ public class Principal extends JFrame {
 		
 		panelLogin = new JPanel();
 		panelLogin.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Logueate para Guardar Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelLogin.setBounds(12, 131, 249, 204);
+		panelLogin.setBounds(12, 95, 249, 256);
 		panelPrincipal.add(panelLogin);
 		panelLogin.setLayout(null);
 		
@@ -197,6 +204,8 @@ public class Principal extends JFrame {
 					contentPane.repaint();
 					
 					
+				}else {
+					labelError.setText("Usuario o Password Incorrecto");
 				}
 			}
 		});
@@ -204,6 +213,12 @@ public class Principal extends JFrame {
 		JLabel lblNombreDeUsuario = new JLabel("Nombre de Usuario");
 		lblNombreDeUsuario.setBounds(31, 38, 110, 16);
 		panelLogin.add(lblNombreDeUsuario);
+		
+		labelError = new JLabel("");
+		labelError.setFont(new Font("Tahoma", Font.BOLD, 13));
+		labelError.setForeground(Color.RED);
+		labelError.setBounds(31, 211, 206, 32);
+		panelLogin.add(labelError);
 		
 		JLabel lblLogueadoComo = new JLabel("Logueado Como: ");
 		lblLogueadoComo.setBounds(31, 131, 110, 16);
@@ -217,7 +232,22 @@ public class Principal extends JFrame {
 //		System.out.println(misCreditos.isEnabled());
 //		System.out.println(miPanelPreguntas.isEnabled());
 //		System.out.println(miPanelComoJugar.isEnabled());
-	
+		
+		
+		miConexion.getScores(miTableModel);
+		topScores = new JTable();
+		topScores.setModel(miTableModel);
+		topScores.setBounds(294, 95, 230, 256);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(273, 107, 289, 244);
+		scrollPane.add(topScores);
+		//REvisar la documentación para ver que significa el JScrollPane
+		//http://docs.oracle.com/javase/7/docs/api/javax/swing/JScrollPane.html
+		
+		scrollPane.setViewportView(topScores);
+		panelPrincipal.add(scrollPane);
+		
 	}
 	
 	public void CerrarVentana(){
@@ -235,5 +265,9 @@ public class Principal extends JFrame {
 		}
 		contentPane.add(miVentanaActual);
 		contentPane.repaint();
+	}
+	private String[] tableModel(){
+	    String columna[]=new String[]{"Rank","Name","Points"};
+	    return columna;
 	}
 }
