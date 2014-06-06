@@ -76,7 +76,7 @@ public class Principal extends JFrame {
 				contentPane.add(panelPrincipal);
 				contentPane.repaint();
 			}
-		});
+		}); 
 		misComponentesActivos = new ArrayList<JPanel>();
 		miConexion = new ConexionBBDD();
 		
