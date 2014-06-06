@@ -71,8 +71,6 @@ public class Principal extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent arg0) {
-				
-				System.out.println("OLA K ASE");
 				contentPane.add(panelPrincipal);
 				contentPane.repaint();
 			}
@@ -191,7 +189,7 @@ public class Principal extends JFrame {
 		panelLogin.add(textFieldUser);
 		textFieldUser.setColumns(10);
 		
-		JButton btnLogin = new JButton("Login");
+		JButton btnLogin = new JButton("Login2");
 		btnLogin.setBounds(31, 166, 75, 25);
 		panelLogin.add(btnLogin);
 		btnLogin.addActionListener(new ActionListener() {

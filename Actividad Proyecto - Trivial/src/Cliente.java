@@ -1,9 +1,12 @@
+import java.awt.Color;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import javax.swing.JLabel;
 
 
 public class Cliente {
@@ -13,8 +16,9 @@ public class Cliente {
 	private ObjectOutputStream salida; // flujo de salida hacia el servidor
 	private ObjectInputStream entrada; // flujo de entrada del servidor
 	private PanelPreguntas objetoPreguntas;
+	private JLabel lblClienteOnline;
 	
-	public Cliente(String host) {
+	public Cliente(String host, String password, JLabel lblClienteOnline) {
 		servidor = host; // establece el servidor al que se conecta este cliente
 	}
 	
@@ -27,6 +31,8 @@ public class Cliente {
 		System.out.println("Conectado a: "+ cliente.getInetAddress().getHostName() );
 		try{
 			obtenerFlujos();
+			lblClienteOnline.setText("Online");
+			lblClienteOnline.setForeground(Color.GREEN);
 		}catch(IOException exception){
 			System.out.println(exception);
 		}

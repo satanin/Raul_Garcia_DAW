@@ -1,19 +1,26 @@
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 
 public class PanelMultiPlayer extends JPanel {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField serverAddress;
+	private JTextField clientePassword;
+	private JTextField serverPassword;
 	private ConexionBBDD miConexion;
+	private JLabel lblOnline,lblClienteOnline;
 
 	public PanelMultiPlayer(ConexionBBDD miConexion) {
 		this.miConexion = miConexion;
@@ -25,57 +32,97 @@ public class PanelMultiPlayer extends JPanel {
 		lblBienvenidoALa.setBounds(64, 13, 327, 16);
 		add(lblBienvenidoALa);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.GRAY);
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255), 1, true), "Conectar a Servidor", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		panel.setBounds(12, 60, 210, 227);
-		add(panel);
-		panel.setLayout(null);
+		JPanel panelCliente = new JPanel();
+		panelCliente.setBackground(Color.GRAY);
+		panelCliente.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255), 1, true), "Conectar a Servidor", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		panelCliente.setBounds(12, 60, 210, 227);
+		add(panelCliente);
+		panelCliente.setLayout(null);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(12, 150, 186, 22);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		clientePassword = new JTextField();
+		clientePassword.setBounds(12, 114, 186, 22);
+		panelCliente.add(clientePassword);
+		clientePassword.setColumns(10);
 		
 		JLabel lblServerPassword = new JLabel("Server Password:");
 		lblServerPassword.setForeground(Color.WHITE);
-		lblServerPassword.setBounds(12, 121, 105, 16);
-		panel.add(lblServerPassword);
+		lblServerPassword.setBounds(12, 95, 105, 16);
+		panelCliente.add(lblServerPassword);
 		
 		JLabel lblServerAddress = new JLabel("Server Address:");
 		lblServerAddress.setForeground(Color.WHITE);
 		lblServerAddress.setBounds(12, 36, 105, 16);
-		panel.add(lblServerAddress);
+		panelCliente.add(lblServerAddress);
 		
-		textField = new JTextField();
-		textField.setBounds(12, 60, 186, 22);
-		panel.add(textField);
-		textField.setColumns(10);
+		serverAddress = new JTextField();
+		serverAddress.setBounds(12, 60, 186, 22);
+		panelCliente.add(serverAddress);
+		serverAddress.setColumns(10);
 		
 		JButton btnConectarAPartida = new JButton("Conectar a Partida");
+		btnConectarAPartida.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Cliente cliente = new Cliente(serverAddress.getText(),clientePassword.getText(),lblClienteOnline);
+				try {
+					cliente.conectarAlServidor();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnConectarAPartida.setBounds(12, 189, 186, 25);
-		panel.add(btnConectarAPartida);
+		panelCliente.add(btnConectarAPartida);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.GRAY);
-		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255), 1, true), "Crear Servidor", TitledBorder.LEADING, TitledBorder.TOP, null, Color.WHITE));
-		panel_1.setBounds(234, 60, 204, 227);
-		add(panel_1);
-		panel_1.setLayout(null);
+		JLabel lblEstado_1 = new JLabel("Estado");
+		lblEstado_1.setForeground(Color.WHITE);
+		lblEstado_1.setBounds(12, 144, 56, 16);
+		panelCliente.add(lblEstado_1);
+		
+		lblClienteOnline = new JLabel("Offline");
+		lblClienteOnline.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblClienteOnline.setForeground(Color.RED);
+		lblClienteOnline.setBounds(80, 144, 56, 16);
+		panelCliente.add(lblClienteOnline);
+		
+		JPanel panelServidor = new JPanel();
+		panelServidor.setBackground(Color.GRAY);
+		panelServidor.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255), 1, true), "Crear Servidor", TitledBorder.LEADING, TitledBorder.TOP, null, Color.WHITE));
+		panelServidor.setBounds(234, 60, 204, 227);
+		add(panelServidor);
+		panelServidor.setLayout(null);
 		
 		JLabel label = new JLabel("Server Password:");
 		label.setBounds(12, 40, 102, 16);
-		panel_1.add(label);
+		panelServidor.add(label);
 		label.setForeground(Color.WHITE);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(12, 61, 139, 22);
-		panel_1.add(textField_2);
-		textField_2.setColumns(10);
+		serverPassword = new JTextField();
+		serverPassword.setBounds(12, 61, 139, 22);
+		panelServidor.add(serverPassword);
+		serverPassword.setColumns(10);
 		
 		JButton btnCrearPartidaOnline = new JButton("Crear Partida Online");
+		btnCrearPartidaOnline.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Thread servidor = new Thread( new Servidor(serverPassword.getText(), lblOnline));
+				servidor.start();
+			}
+		});
 		btnCrearPartidaOnline.setBounds(12, 189, 180, 25);
-		panel_1.add(btnCrearPartidaOnline);
+		panelServidor.add(btnCrearPartidaOnline);
+		
+		JLabel lblEstado = new JLabel("Estado");
+		lblEstado.setForeground(Color.WHITE);
+		lblEstado.setBounds(12, 107, 56, 16);
+		panelServidor.add(lblEstado);
+		
+		lblOnline = new JLabel("Offline");
+		lblOnline.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblOnline.setForeground(Color.RED);
+		lblOnline.setBackground(Color.RED);
+		lblOnline.setBounds(80, 107, 61, 16);
+		panelServidor.add(lblOnline);
 
 	}
 }
