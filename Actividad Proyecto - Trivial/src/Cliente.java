@@ -19,7 +19,8 @@ public class Cliente {
 	private JLabel lblClienteOnline;
 	
 	public Cliente(String host, String password, JLabel lblClienteOnline) {
-		servidor = host; // establece el servidor al que se conecta este cliente
+		servidor = host;
+		this.lblClienteOnline=lblClienteOnline;// establece el servidor al que se conecta este cliente
 	}
 	
 	public void conectarAlServidor() throws IOException
