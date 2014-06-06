@@ -1,9 +1,12 @@
+import java.awt.Color;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 
@@ -13,11 +16,13 @@ public class Servidor implements Runnable{
 	private int contador = 1;// contador del número de conexiones
 	private ObjectOutputStream salida;// flujo de salida hacia el cliente
 	private ObjectInputStream entrada; // flujo de entrada del cliente
-	private JTextField cliente;
+	private String serverPass;
+	private JLabel lblOnline;
 
 	
-	public Servidor(JTextField cliente){
-		this.cliente=cliente;
+	public Servidor(String password, JLabel lblOnline){
+		serverPass=password;
+		this.lblOnline = lblOnline;
 	}
 	
 	public void run()
@@ -42,6 +47,8 @@ public class Servidor implements Runnable{
 				{
 					cerrarConexion();// cierra la conexión
 					contador++;
+					lblOnline.setText("Offline");
+					lblOnline.setForeground(Color.RED);
 				}// fin de finally
 			}// fin de while
 		}// fin de try
@@ -53,7 +60,10 @@ public class Servidor implements Runnable{
 	
 	private void esperarConexion() throws IOException{
 		System.out.println("Esperando una conexion\n" );
+		lblOnline.setText("Online");
+		lblOnline.setForeground(Color.GREEN);
 		conexion = servidor.accept(); // permite al servidor aceptar la conexión
+
 		System.out.println("Conexion "+ contador +" recibida de: "+
 		conexion.getInetAddress().getHostName() );
 	}// fin del método esperarConexion
@@ -81,7 +91,7 @@ public class Servidor implements Runnable{
 				try// lee el mensaje y lo muestra en pantalla
 				{
 					mensaje = ( String ) entrada.readObject(); // lee el nuevo mensaje
-					this.cliente.setText("\n"+ mensaje); // muestra el mensaje
+//					this.cliente.setText("\n"+ mensaje); // muestra el mensaje
 				}// fin de try
 				catch( ClassNotFoundException excepcionClaseNoEncontrada ) 
 				{
