@@ -30,6 +30,11 @@ import java.awt.event.FocusEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/*Esta es la clase principal del proyecto trivial desde el cual 
+ * vamos a hacer las interacciones con todas las ventanas, en este caso Jpanel
+ * con los que vamos a mejorar la experiencia del usuario, pues la única ventana
+ * que se le abrirá es la de final de partida 
+ */
 
 public class Principal extends JFrame {
 
@@ -75,6 +80,7 @@ public class Principal extends JFrame {
 				contentPane.repaint();
 			}
 		}); 
+		//Inicializamos arraylist de Jpanel para hacer las transiciones entre ellas y la BBDD
 		misComponentesActivos = new ArrayList<JPanel>();
 		miConexion = new ConexionBBDD();
 		
@@ -88,6 +94,7 @@ public class Principal extends JFrame {
 		JMenu mnNewMenu = new JMenu("Inicio");
 		menuBar.add(mnNewMenu);
 		
+		//Botón para practicar en solitario, lanzando el correspondiente jpanel
 		JMenuItem mntmInicio = new JMenuItem("Practica Solo");
 		mntmInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -101,6 +108,7 @@ public class Principal extends JFrame {
 		});
 		mnNewMenu.add(mntmInicio);
 		
+		//Botón para iniciar el juego multiplayer
 		JMenuItem mntmNewMenuItem = new JMenuItem("Multiplayer");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -112,6 +120,7 @@ public class Principal extends JFrame {
 		});
 		mnNewMenu.add(mntmNewMenuItem);
 		
+		//Botón para salir y cerrar la ventana del juego
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Salir");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -123,6 +132,7 @@ public class Principal extends JFrame {
 		JMenu mnNewMenu_1 = new JMenu("Ayuda");
 		menuBar.add(mnNewMenu_1);
 		
+		//Botón para conocer la ayuda del juego y conocer las instrucciones
 		JMenuItem mntmAyuda = new JMenuItem("Como Jugar");
 		mntmAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -134,6 +144,7 @@ public class Principal extends JFrame {
 		});
 		mnNewMenu_1.add(mntmAyuda);
 		
+		//Botón para conocer a los desarrolladores del juego
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Cr\u00E9ditos");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -160,7 +171,7 @@ public class Principal extends JFrame {
 		lblNewLabel_1.setBounds(146, 5, 286, 31);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelPrincipal.add(lblNewLabel_1);
-		
+		//Objeto necesrio para el jscroll en el que mostramos los mejores resultados
 		miTableModel = new DefaultTableModel(null, tableModel());
 		
 		
@@ -189,19 +200,21 @@ public class Principal extends JFrame {
 		panelLogin.add(textFieldUser);
 		textFieldUser.setColumns(10);
 		
+		/*Evento en el que capturamos el usuario y contraseña que introduce el jugador
+		 * y que si es correcto nos muestra el nombre del usuario que se ha registrado
+		 */
 		JButton btnLogin = new JButton("Login2");
 		btnLogin.setBounds(31, 166, 75, 25);
 		panelLogin.add(btnLogin);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean conectado = miConexion.getLogin(textFieldUser.getText(),String.valueOf(passwordField.getPassword()));
-				System.out.println(conectado);
+				//System.out.println(conectado);
 				if (conectado==true){
 					lblUserLogged.setText(textFieldUser.getText());
 					panelPrincipal.remove(panelLogin);
 					contentPane.repaint();
-					
-					
+			
 				}else {
 					labelError.setText("Usuario o Password Incorrecto");
 				}
@@ -226,11 +239,6 @@ public class Principal extends JFrame {
 		lblUserLogged.setBounds(138, 131, 56, 16);
 		panelPrincipal.add(lblUserLogged);
 		
-		System.out.println(panelPrincipal.isEnabled());
-//		System.out.println(misCreditos.isEnabled());
-//		System.out.println(miPanelPreguntas.isEnabled());
-//		System.out.println(miPanelComoJugar.isEnabled());
-		
 		
 		miConexion.getScores(miTableModel);
 		topScores = new JTable();
@@ -240,22 +248,24 @@ public class Principal extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(273, 107, 289, 244);
 		scrollPane.add(topScores);
-		//REvisar la documentación para ver que significa el JScrollPane
-		//http://docs.oracle.com/javase/7/docs/api/javax/swing/JScrollPane.html
+
 		
 		scrollPane.setViewportView(topScores);
 		panelPrincipal.add(scrollPane);
 		
 	}
 	
+	//Metodo para cerrar la ventana
 	public void CerrarVentana(){
 		frame.dispose();
 	}
 	
+	//Metodo para iniciar la ventana principal
 	public static Principal getPrincipal(){
 		return frame;
 	}
 	
+	//Metodo que nos permite limpiar y repintar las ventanas según vamos interactuando con ellas
 	private void limpiarVentana(JPanel miVentanaActual, ArrayList<JPanel> misComponentesActivos){
 		for (int i=0;i<misComponentesActivos.size();i++){
 			contentPane.remove(misComponentesActivos.get(i));
@@ -264,6 +274,7 @@ public class Principal extends JFrame {
 		contentPane.add(miVentanaActual);
 		contentPane.repaint();
 	}
+	//Metodo con el que pintamos la cabecera de las mejores puntuaciones del jscroll
 	private String[] tableModel(){
 	    String columna[]=new String[]{"Rank","Name","Points"};
 	    return columna;

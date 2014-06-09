@@ -8,9 +8,7 @@ import javax.swing.JRadioButton;
 
 public class Creditos extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
+	 // Clase para mostrar en un Jpanel los desarrolladores del juego
 	public Creditos() {
 		setLayout(null);
 		

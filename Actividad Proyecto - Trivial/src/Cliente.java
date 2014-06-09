@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 
+/*En esta clase podemos ver el código necesario para 
+ * que nuestro juego haga de cliente y pueda conectarse
+ * en red con otros jugadores
+ */
 
 public class Cliente {
 
@@ -15,8 +19,8 @@ public class Cliente {
 	private String servidor; // aloja al servidor para esta aplicación
 	private ObjectOutputStream salida; // flujo de salida hacia el servidor
 	private ObjectInputStream entrada; // flujo de entrada del servidor
-	private PanelPreguntas objetoPreguntas;
-	private JLabel lblClienteOnline;
+	private PanelPreguntas objetoPreguntas; //objeto preguntas
+	private JLabel lblClienteOnline; //etiqueta saber si esta online
 	
 	public Cliente(String host, String password, JLabel lblClienteOnline) {
 		servidor = host;
@@ -28,7 +32,6 @@ public class Cliente {
 		System.out.println("Intentando realizar conexion\n");
 		// crea objeto Socket para hacer conexión con el servidor
 		cliente = new Socket( InetAddress.getByName( servidor ), 12345);
-		// muestra la información de la conexión
 		System.out.println("Conectado a: "+ cliente.getInetAddress().getHostName() );
 		lblClienteOnline.setText("Online");
 		lblClienteOnline.setForeground(Color.GREEN);

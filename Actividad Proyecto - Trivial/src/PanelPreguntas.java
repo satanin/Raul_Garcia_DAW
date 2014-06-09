@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/*Desde esta clase vamos a controlar la lógica del juego
+ */
 
 public class PanelPreguntas extends JPanel {
 	private JLabel labelContador;
@@ -33,14 +35,11 @@ public class PanelPreguntas extends JPanel {
 	private Random aleatorio;
 	private String usuario;
 
-	/**
-	 * Create the panel.
-	 */
+	//Pasamos por el constructor la BBDD y el usuario para poder usarlor
 	public PanelPreguntas(ConexionBBDD miConexion, String usuario) {
 		this.usuario = usuario;
 		this.panelPreguntas=this;
 		setBounds(new Rectangle(10, 11, 563, 384));
-		
 		setBackground(Color.GRAY);
 		setLayout(null);
 		
@@ -53,10 +52,11 @@ public class PanelPreguntas extends JPanel {
 		txtPregunta = new JTextPane();
 		txtPregunta.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtPregunta.setEditable(false);
-		txtPregunta.setText("Aqui iria el texto de la pregunta lo que no s\u00E9 es si la pregunta es muy larga que pasar\u00EDa con el texto, quiz\u00E1 deber\u00EDa poner otra cosa");
+		txtPregunta.setText("");
 		txtPregunta.setBounds(10, 57, 543, 68);
 		add(txtPregunta);
 		
+		//Evento para que si se elige una respuesta desactivar las otras dos
 		radioResp1 = new JRadioButton("Respuesta 1");
 		radioResp1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -70,6 +70,7 @@ public class PanelPreguntas extends JPanel {
 		radioResp1.setBounds(10, 159, 543, 23);
 		add(radioResp1);
 		
+		//Evento para que si se elige una respuesta desactivar las otras dos
 		radioResp2 = new JRadioButton("Respuesta 2");
 		radioResp2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -83,6 +84,8 @@ public class PanelPreguntas extends JPanel {
 		radioResp2.setBounds(10, 207, 543, 23);
 		add(radioResp2);
 		
+		
+		//Evento para que si se elige una respuesta desactivar las otras dos
 		radioResp3 = new JRadioButton("Respuesta 3");
 		radioResp3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -105,16 +108,18 @@ public class PanelPreguntas extends JPanel {
 		labelContador.setBounds(507, 11, 46, 34);
 		add(labelContador);
 		
+		//Creamos un objeto tread para que aparezca el contador en el panel
 		Thread miContador = new Thread( new Contador(labelContador,Principal.getPrincipal(), this.panelPreguntas));
 		miContador.start();
 		
-			
+		//Inicializamos el array de las preguntas y la conexion	
 		misPreguntas = new ArrayList<Pregunta>();
 		this.miConexion = miConexion;
 		this.miConexion.leerPreguntas(misPreguntas);
-		System.out.println(misPreguntas.size());
+		//System.out.println(misPreguntas.size());
 		misPreguntas = preguntasAleatorias(misPreguntas);
 		
+		//Mostramos por pantalla las preguntas
 		txtPregunta.setText(misPreguntas.get(cont).getPregunta());
 		radioResp1.setText(misPreguntas.get(cont).getRespuesta1());
 		radioResp2.setText(misPreguntas.get(cont).getRespuesta2());
@@ -135,6 +140,10 @@ public class PanelPreguntas extends JPanel {
 		JButton btnSiguiente = new JButton("Siguiente");
 		btnSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/*Evento al que le pasamos el metodo chekrespuesta para comprobar la pregunta
+				 * y al que le decimos que si la pregunta es correcta sume puntos y si es 
+				 * incorrecta no sume nada y al final reseteamos los radiobuttons y
+				 * comenzamos añadimos otra vez nuevas preguntas */
 				CheckRespuesta();
 				if(respuesta == 0){
 					labelResultado.setForeground(Color.RED);
@@ -142,7 +151,6 @@ public class PanelPreguntas extends JPanel {
 				}else {
 					System.out.println("contador: "+cont+", Size: "+misPreguntas.size());
 					if(cont<misPreguntas.size()){
-						//hola
 						if(misPreguntas.get(cont).getRespuestaValida() == respuesta){
 							labelResultado.setForeground(Color.GREEN);
 							labelResultado.setText("Respuesta Correcta! Sumas 5 puntos!");
@@ -154,9 +162,9 @@ public class PanelPreguntas extends JPanel {
 							labelPuntos.setText(String.valueOf(puntos));
 						}
 					}				
-					cont++;
+					cont++; 
 					if(cont<misPreguntas.size()){
-					System.out.println("Contador actualizado a valor:"+cont);
+					//System.out.println("Contador actualizado a valor:"+cont);
 					resetRadioButtons();
 					txtPregunta.setText(misPreguntas.get(cont).getPregunta());
 					radioResp1.setText(misPreguntas.get(cont).getRespuesta1());
@@ -175,15 +183,10 @@ public class PanelPreguntas extends JPanel {
 		labelResultado.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		labelResultado.setBounds(10, 284, 543, 25);
 		add(labelResultado);
-		
-		//System.out.println(misPreguntas.get(0).getPregunta());
-		
-
-
 	}
 	
+	//Metodo para establecer la respuesta correcta
 	private void CheckRespuesta(){
-		
 		if(radioResp1.isSelected()){
 			respuesta = 1;
 		}else if(radioResp2.isSelected()){
@@ -195,28 +198,32 @@ public class PanelPreguntas extends JPanel {
 		}
 	}
 	
+	//Metodo para resetear los radio button
 	private void resetRadioButtons(){
 		radioResp1.setSelected(false);
 		radioResp2.setSelected(false);
 		radioResp3.setSelected(false);
 	}
 	
+	//Metodo para obtener los puntos del usuario
 	public int getPuntos(){
 		return puntos;
 	}
 	
+	//Metodo con el que cambiamos el orden de las preguntas para que sea aleatorio
 	public ArrayList<Pregunta> preguntasAleatorias(ArrayList<Pregunta> misPreguntas){
-		
-		System.out.println("Tengo "+misPreguntas.size()+" preguntas en misPreguntas");
+		//System.out.println("Tengo "+misPreguntas.size()+" preguntas en misPreguntas");
 		long seed = System.nanoTime();
-		System.out.println("Cambiando el orden de las preguntas...");
+		//System.out.println("Cambiando el orden de las preguntas...");
 		Collections.shuffle(misPreguntas, new Random(seed));
 		return misPreguntas;
 	}
 	
+	//Metodo para devolver el usuario introducido
 	public String getUsuario(){
 		return usuario;
 	}
+	//Metodo para devolver la conexion con la BBDD
 	public ConexionBBDD getConexion(){
 		return miConexion;
 	}

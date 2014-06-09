@@ -20,8 +20,7 @@ public class PanelComoJugar extends JPanel {
 	private JTextField txtModalidadesDeJuego;
 	private JTextField txtComoJugar;
 
-	/**
-	 * Create the panel.
+	/* Clase en la que se explican las reglas del juego en un JPanel
 	 */
 	public PanelComoJugar() {
 		setBounds(new Rectangle(10, 11, 563, 384));

@@ -14,6 +14,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
+/*Desde esta clase vamos a controlar la conexion en red
+ * para que puedan jugar dos usuarios a la vez
+ */
+
 
 public class PanelMultiPlayer extends JPanel {
 	private JTextField serverAddress;
@@ -22,6 +26,7 @@ public class PanelMultiPlayer extends JPanel {
 	private ConexionBBDD miConexion;
 	private JLabel lblOnline,lblClienteOnline;
 
+	//Pasamos BBDD por el constructor
 	public PanelMultiPlayer(ConexionBBDD miConexion) {
 		this.miConexion = miConexion;
 		setLayout(null);
@@ -59,6 +64,7 @@ public class PanelMultiPlayer extends JPanel {
 		panelCliente.add(serverAddress);
 		serverAddress.setColumns(10);
 		
+		//Evento que nos permite conectarnos con una partida.
 		JButton btnConectarAPartida = new JButton("Conectar a Partida");
 		btnConectarAPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -102,6 +108,7 @@ public class PanelMultiPlayer extends JPanel {
 		panelServidor.add(serverPassword);
 		serverPassword.setColumns(10);
 		
+		//Evento al que le pasamos el tread con el que realizar la conexión en red
 		JButton btnCrearPartidaOnline = new JButton("Crear Partida Online");
 		btnCrearPartidaOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

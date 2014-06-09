@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-
+/*En esta clase encontramos todas los metodos que nos van a permitir devolver
+ * las Id de las preguntas, las repuestas, las preguntas así como las
+ * respuestas válidas*/
 
 public class Pregunta {
 	
