@@ -52,6 +52,7 @@ public class Cliente {
 	{
 		// establece flujo de salida para los objetos
 		salida = new ObjectOutputStream( cliente.getOutputStream() );
+		salida.writeChars(miframe.getUser());
 		salida.flush();// vacía el búfer de salida para enviar información de encabezado
 
 		// establece flujo de entrada para los objetos
@@ -59,6 +60,7 @@ public class Cliente {
 		try {
 			misPreguntasOnline = (Preguntas) entrada.readObject();
 			System.out.println(misPreguntasOnline);
+			
 			miframe.lanzarPartidaMultiplayer(misPreguntasOnline);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

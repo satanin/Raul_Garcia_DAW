@@ -208,6 +208,9 @@ public class PanelPreguntasOnline extends JPanel {
 		lblRemoteUser.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblRemoteUser.setBounds(243, 350, 103, 14);
 		add(lblRemoteUser);
+		
+		lblLocalUser.setText(misPreguntasOnline.getClientUser());
+		lblRemoteUser.setText(misPreguntasOnline.getServerUser());
 	}
 	
 	//Metodo para establecer la respuesta correcta
@@ -252,6 +255,6 @@ public class PanelPreguntasOnline extends JPanel {
 	public ConexionBBDD getConexion(){
 		return miConexion;
 	}
-
+	
 }
 

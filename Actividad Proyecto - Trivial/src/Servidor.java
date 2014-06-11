@@ -83,10 +83,12 @@ public class Servidor implements Runnable{
 		salida = new ObjectOutputStream( conexion.getOutputStream() );
 		salida.flush();// vacía el búfer de salida para enviar información del encabezado
 		enviarDatos(misPreguntasOnline);
-		miframe.lanzarPartidaMultiplayer(misPreguntasOnline);
+
 		// establece el flujo de entrada para los objetos
 		entrada = new ObjectInputStream( conexion.getInputStream() );
 		System.out.println("\nSe obtuvieron los flujos de E/S\n");
+		misPreguntasOnline.setClientUser(entrada.readUTF());
+		miframe.lanzarPartidaMultiplayer(misPreguntasOnline);
 	}// fin del método obtenerFlujos
 	
 	// procesa la conexión con el cliente

@@ -27,4 +27,8 @@ public class Preguntas implements Serializable{
 	public String toString(){
 		return "Se han leido las preguntas";
 	}
+	
+	public void setClientUser(String clientUser){
+		this.clientUser = clientUser;
+	}
 }
