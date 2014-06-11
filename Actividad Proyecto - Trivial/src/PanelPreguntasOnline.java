@@ -38,14 +38,16 @@ public class PanelPreguntasOnline extends JPanel {
 	private JLabel lblLocalUser;
 	private JLabel lblRemoteUser;
 
-	public PanelPreguntasOnline(Preguntas misPreguntasOnline) {
+	public PanelPreguntasOnline(Preguntas misPreguntasOnline, ConexionBBDD conexion) {
 		setBounds(new Rectangle(10, 11, 563, 384));
 		setLayout(null);
-		this.panelPreguntasOnline = this;
-		this.usuario = misPreguntasOnline.getServerUser();
 		setBounds(new Rectangle(10, 11, 563, 384));
 		setBackground(Color.GRAY);
 		setLayout(null);
+		
+		this.panelPreguntasOnline = this;
+		this.usuario = misPreguntasOnline.getServerUser();
+		miConexion = conexion;
 		
 		JLabel labelTituloPregunta = new JLabel("T\u00EDtulo de la Pregunta");
 		labelTituloPregunta.setForeground(Color.WHITE);
