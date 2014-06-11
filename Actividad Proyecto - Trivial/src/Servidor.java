@@ -47,8 +47,7 @@ public class Servidor implements Runnable{
 					esperarConexion();// espera una conexión
 					obtenerFlujos();// obtiene los flujos de entrada y salida
 					procesarConexion();
-					enviarDatos(misPreguntasOnline);
-					miframe.lanzarPartidaMultiplayer(misPreguntasOnline);
+
 				}// fin de try
 				catch( EOFException excepcionEOF ){
 					System.out.println("\nServidor termino la conexion");
@@ -97,7 +96,7 @@ public class Servidor implements Runnable{
 	private void procesarConexion() throws IOException
 	{
 		String mensaje = "Conexion exitosa";
-		enviarDatos( mensaje );// envía mensaje de conexión exitosa
+		//enviarDatos( mensaje );// envía mensaje de conexión exitosa
 		// habilita campoIntroducir para que el usuario del servidor pueda enviar mensajes
 		do// procesa los mensajes enviados desde el cliente
 			{
@@ -107,6 +106,8 @@ public class Servidor implements Runnable{
 //					this.cliente.setText("\n"+ mensaje); // muestra el mensaje
 					System.out.println(mensaje);
 					misPreguntasOnline.setClientUser(mensaje);
+					enviarDatos(misPreguntasOnline);
+					miframe.lanzarPartidaMultiplayer(misPreguntasOnline);
 
 				}// fin de try
 				catch( ClassNotFoundException excepcionClaseNoEncontrada ) 
