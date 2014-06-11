@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -23,6 +24,8 @@ public class ConexionBBDD {
 	private Statement instruccion = null;
 	private ResultSet manejarResultados = null;
 	private Pregunta questions;
+	private String miUser;
+	private boolean conectado = false;
 
 //conectar en local desde Florida "jdbc:mysql://localhost/trivial","root","tonphp"
 
@@ -60,8 +63,10 @@ public class ConexionBBDD {
 			    questions.setIdPregunta(manejarResultados.getInt("idPregunta"));
 			    misPreguntas.add(questions);
 			    //System.out.println("Obtenidas : "+misPreguntas.size()+" Preguntas y Respuestas");
-
+			    
 			}
+			preguntasAleatorias(misPreguntas);
+			
 		} catch(SQLException e){
 			 JOptionPane.showMessageDialog(null,"Error sql no se pueden leer datos");
 		  }
@@ -69,11 +74,12 @@ public class ConexionBBDD {
 	
 	//Metodo para hacer el login en el juego
 	public boolean getLogin(String user, String password){
-		boolean conectado = false;
+
+		miUser = user;
 		try{
 			instruccion = (Statement) conexion.createStatement();
 			//System.out.println(("SELECT * FROM users WHERE `username`='"+user+"' AND `password`="+password));
-			manejarResultados = instruccion.executeQuery ("SELECT * FROM users WHERE `username`='"+user+"' AND `password`='"+password+"'");
+			manejarResultados = instruccion.executeQuery ("SELECT * FROM users WHERE `username`='"+miUser+"' AND `password`='"+password+"'");
 			//System.out.println("Leyendo usuario de la base de datos");
 			manejarResultados.last();
 			//If para conocer si nuestro usuario y contraseña se corresponde con el de la BBDD
@@ -130,5 +136,11 @@ public class ConexionBBDD {
 			 JOptionPane.showMessageDialog(null,("Fallo"));
 		  }		
 	}
-	
+	//Metodo con el que cambiamos el orden de las preguntas para que sea aleatorio
+	public void preguntasAleatorias(ArrayList<Pregunta> misPreguntas){
+		//System.out.println("Tengo "+misPreguntas.size()+" preguntas en misPreguntas");
+		long seed = System.nanoTime();
+		//System.out.println("Cambiando el orden de las preguntas...");
+		Collections.shuffle(misPreguntas, new Random(seed));
+	}
 }

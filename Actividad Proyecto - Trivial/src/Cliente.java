@@ -22,6 +22,7 @@ public class Cliente {
 	private PanelPreguntas objetoPreguntas; //objeto preguntas
 	private JLabel lblClienteOnline; //etiqueta saber si esta online
 	private Principal miframe;
+	private Preguntas misPreguntasOnline;
 	
 	public Cliente(String host, String password, JLabel lblClienteOnline) {
 		servidor = host;
@@ -36,9 +37,9 @@ public class Cliente {
 		System.out.println("Conectado a: "+ cliente.getInetAddress().getHostName() );
 		lblClienteOnline.setText("Online");
 		lblClienteOnline.setForeground(Color.GREEN);
-		miframe=frame;
-		miframe.lanzarPartidaMultiplayer();
+
 		try{
+			miframe=frame;
 			obtenerFlujos(miframe);
 
 		}catch(IOException exception){
@@ -55,7 +56,14 @@ public class Cliente {
 
 		// establece flujo de entrada para los objetos
 		entrada = new ObjectInputStream( cliente.getInputStream() );
-
+		try {
+			misPreguntasOnline = (Preguntas) entrada.readObject();
+			System.out.println(misPreguntasOnline);
+			miframe.lanzarPartidaMultiplayer(misPreguntasOnline);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("\nSe obtuvieron los flujos de E/S\n");
 
 	}// fin del método obtenerFlujos

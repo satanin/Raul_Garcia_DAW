@@ -28,12 +28,14 @@ public class PanelMultiPlayer extends JPanel {
 	private JLabel lblOnline,lblClienteOnline;
 	private Principal miframe;
 	private Thread servidor;
+	private Servidor s;
+
 
 	//Pasamos BBDD por el constructor
-	public PanelMultiPlayer(ConexionBBDD miConexion, Principal frame) {
+	public PanelMultiPlayer(ConexionBBDD conexion, Principal frame) {
 		miframe = frame;
 		setBounds(new Rectangle(10, 11, 563, 384));
-		this.miConexion = miConexion;
+		miConexion = conexion;
 		setLayout(null);
 		
 		JLabel lblBienvenidoALa = new JLabel("Bienvenido a la Secci\u00F3n Multiplayer");
@@ -126,7 +128,8 @@ public class PanelMultiPlayer extends JPanel {
 		JButton btnCrearPartidaOnline = new JButton("Crear Partida Online");
 		btnCrearPartidaOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Thread servidor = new Thread( new Servidor(serverPassword.getText(), lblOnline, miframe));
+				s = new Servidor(serverPassword.getText(), lblOnline, miframe, miConexion);
+				Thread servidor = new Thread(s);
 				servidor.start();
 			}
 		});
@@ -146,6 +149,11 @@ public class PanelMultiPlayer extends JPanel {
 		panelServidor.add(lblOnline);
 		
 		JButton btnNewButton = new JButton("Parar Servidor");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				s.cerrarConexion();
+			}
+		});
 		btnNewButton.setBounds(12, 193, 180, 23);
 		panelServidor.add(btnNewButton);
 

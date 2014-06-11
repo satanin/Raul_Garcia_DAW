@@ -5,6 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -19,11 +22,15 @@ public class Servidor implements Runnable{
 	private String serverPass;
 	private JLabel lblOnline;
 	private Principal miframe;
+	private Preguntas misPreguntasOnline;
+	private ArrayList<Pregunta> misPreguntas;
 	
-	public Servidor(String password, JLabel lblOnline, Principal frame){
+	public Servidor(String password, JLabel lblOnline, Principal frame, ConexionBBDD miConexion){
 		serverPass=password;
 		this.lblOnline = lblOnline;
 		miframe = frame;
+		miConexion.leerPreguntas(misPreguntas);
+		Preguntas misPreguntasOnline = new Preguntas(misPreguntas,frame.getUser());
 	}
 	
 	public void run()
@@ -67,7 +74,7 @@ public class Servidor implements Runnable{
 		
 		System.out.println("Conexion "+ contador +" recibida de: "+
 		conexion.getInetAddress().getHostName() );
-		miframe.lanzarPartidaMultiplayer();
+		
 	}// fin del método esperarConexion
 	
 	// obtiene flujos para enviar y recibir datos
@@ -75,10 +82,10 @@ public class Servidor implements Runnable{
 		// establece el flujo de salida para los objetos
 		salida = new ObjectOutputStream( conexion.getOutputStream() );
 		salida.flush();// vacía el búfer de salida para enviar información del encabezado
-
+		enviarDatos(misPreguntasOnline);
+		miframe.lanzarPartidaMultiplayer(misPreguntasOnline);
 		// establece el flujo de entrada para los objetos
 		entrada = new ObjectInputStream( conexion.getInputStream() );
-
 		System.out.println("\nSe obtuvieron los flujos de E/S\n");
 	}// fin del método obtenerFlujos
 	
@@ -103,18 +110,31 @@ public class Servidor implements Runnable{
 		}while( !mensaje.equals( "CLIENTE>>> TERMINAR") );
 	}// fin del método procesarConexion
 
-	private void enviarDatos( String mensaje )
+	private void enviarDatos( Preguntas misPreguntasOnline )
 	{
 		try// envía objeto al cliente
 		{
-			salida.writeObject("SERVIDOR>>> "+ mensaje );
+			salida.writeObject(misPreguntasOnline );
 			salida.flush();// envía toda la salida al cliente
-			System.out.println("\nSERVIDOR>>> "+ mensaje );
+			System.out.println("Se han enviado las preguntas al cliente");
 		}// fin de try
 		catch( IOException exepcionES ) {
 			System.out.println("\nError al escribir objeto");
 		}// fin de catch
 	}// fin del método enviarDatos
+	
+	private void enviarDatos( String mensaje )
+	{
+		try// envía objeto al cliente
+		{
+			salida.writeObject("SERVIDOR >>>>" + mensaje );
+			salida.flush();// envía toda la salida al cliente
+			System.out.println("Se ha enviado en mensaje: " + mensaje);
+		}// fin de try
+		catch( IOException exepcionES ) {
+			System.out.println("\nError al escribir objeto");
+		}// fin de catch
+	}
 	
 	public void cerrarConexion() {
 		System.out.println("\nTerminando conexion\n" );
@@ -126,5 +146,7 @@ public class Servidor implements Runnable{
 			exepcionES.printStackTrace();
 		}// fin de catch
 	}// fin del método cerrarConexion
+
+
 
 }

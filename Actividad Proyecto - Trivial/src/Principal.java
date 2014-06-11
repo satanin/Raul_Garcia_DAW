@@ -41,7 +41,7 @@ public class Principal extends JFrame {
 	private Contador miContador;
 	private JLabel lblUserLogged,labelError;
 	public PanelPreguntas miPanelPreguntas;
-	private JPanel contentPane,panelPrincipal,miPanelMultiPlayer,panelLogin;
+	private JPanel contentPane,panelPrincipal,miPanelMultiPlayer,panelLogin, miPanelPreguntasOnline;
 	private ConexionBBDD miConexion;
 	private PanelComoJugar miPanelComoJugar;
 	private Creditos misCreditos;
@@ -52,6 +52,7 @@ public class Principal extends JFrame {
 	private JTextField textFieldUser;
 	private JPasswordField passwordField;
 	private DefaultTableModel miTableModel;
+	private String clientUser;
 	
 	/**
 	 * Launch the application.
@@ -291,12 +292,17 @@ public class Principal extends JFrame {
 	    return columna;
 	}
 	
-	public void lanzarPartidaMultiplayer(){
+	public void lanzarPartidaMultiplayer(Preguntas misPreguntasOnline){
+		clientUser = misPreguntasOnline.getClientUser();
 		System.out.println("Ahora se debería lanzar el nuevo panel multijugador");	
-		miPanelPreguntas = new PanelPreguntas(miConexion, lblUserLogged.getText());
-		miPanelPreguntas.setBounds(10, 11, 563, 384);
-		misComponentesActivos.add(miPanelPreguntas);
-		limpiarVentana(miPanelPreguntas,misComponentesActivos);
+		miPanelPreguntasOnline = new PanelPreguntasOnline(misPreguntasOnline);
+		miPanelPreguntasOnline.setBounds(10, 11, 563, 384);
+		misComponentesActivos.add(miPanelPreguntasOnline);
+		limpiarVentana(miPanelPreguntasOnline,misComponentesActivos);
 		System.out.println("Deberíamos estar viendo el panel Multiplayer");	
+	}
+	
+	public String getUser(){
+		return lblUserLogged.getText();
 	}
 }
