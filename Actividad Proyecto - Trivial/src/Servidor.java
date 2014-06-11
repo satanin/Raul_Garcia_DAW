@@ -18,11 +18,12 @@ public class Servidor implements Runnable{
 	private ObjectInputStream entrada; // flujo de entrada del cliente
 	private String serverPass;
 	private JLabel lblOnline;
-
+	private Principal miframe;
 	
-	public Servidor(String password, JLabel lblOnline){
+	public Servidor(String password, JLabel lblOnline, Principal frame){
 		serverPass=password;
 		this.lblOnline = lblOnline;
+		miframe = frame;
 	}
 	
 	public void run()
@@ -66,6 +67,7 @@ public class Servidor implements Runnable{
 		
 		System.out.println("Conexion "+ contador +" recibida de: "+
 		conexion.getInetAddress().getHostName() );
+		miframe.lanzarPartidaMultiplayer();
 	}// fin del método esperarConexion
 	
 	// obtiene flujos para enviar y recibir datos
@@ -114,7 +116,7 @@ public class Servidor implements Runnable{
 		}// fin de catch
 	}// fin del método enviarDatos
 	
-	private void cerrarConexion() {
+	public void cerrarConexion() {
 		System.out.println("\nTerminando conexion\n" );
 		try{
 			conexion.close();// cierra el socket

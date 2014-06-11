@@ -106,13 +106,24 @@ public class Principal extends JFrame {
 
 			}
 		});
+		
+		//Botón para volver al inicio para poder loguear y ver los top scores
+		JMenuItem mntmInicio_1 = new JMenuItem("Inicio");
+		mntmInicio_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelPrincipal.setVisible(true);
+				misComponentesActivos.add(panelPrincipal);
+				limpiarVentana(panelPrincipal,misComponentesActivos);
+			}
+		});
+		mnNewMenu.add(mntmInicio_1);
 		mnNewMenu.add(mntmInicio);
 		
-		//Botón para iniciar el juego multiplayer
+		//Boton para iniciar el juego multiplayer
 		JMenuItem mntmNewMenuItem = new JMenuItem("Multiplayer");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				miPanelMultiPlayer = new PanelMultiPlayer(miConexion);
+				miPanelMultiPlayer = new PanelMultiPlayer(miConexion, frame);
 				miPanelMultiPlayer.setBounds(10, 11, 563, 384);
 				misComponentesActivos.add(miPanelMultiPlayer);
 				limpiarVentana(miPanelMultiPlayer,misComponentesActivos);
@@ -178,7 +189,7 @@ public class Principal extends JFrame {
 		JLabel lblHighScores = new JLabel("High Scores");
 		lblHighScores.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblHighScores.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHighScores.setBounds(344, 47, 192, 33);
+		lblHighScores.setBounds(316, 63, 192, 33);
 		panelPrincipal.add(lblHighScores);
 		
 		panelLogin = new JPanel();
@@ -278,5 +289,14 @@ public class Principal extends JFrame {
 	private String[] tableModel(){
 	    String columna[]=new String[]{"Rank","Name","Points"};
 	    return columna;
+	}
+	
+	public void lanzarPartidaMultiplayer(){
+		System.out.println("Ahora se debería lanzar el nuevo panel multijugador");	
+		miPanelPreguntas = new PanelPreguntas(miConexion, lblUserLogged.getText());
+		miPanelPreguntas.setBounds(10, 11, 563, 384);
+		misComponentesActivos.add(miPanelPreguntas);
+		limpiarVentana(miPanelPreguntas,misComponentesActivos);
+		System.out.println("Deberíamos estar viendo el panel Multiplayer");	
 	}
 }

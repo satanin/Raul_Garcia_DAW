@@ -26,9 +26,12 @@ public class PanelMultiPlayer extends JPanel {
 	private JTextField serverPassword;
 	private ConexionBBDD miConexion;
 	private JLabel lblOnline,lblClienteOnline;
+	private Principal miframe;
+	private Thread servidor;
 
 	//Pasamos BBDD por el constructor
-	public PanelMultiPlayer(ConexionBBDD miConexion) {
+	public PanelMultiPlayer(ConexionBBDD miConexion, Principal frame) {
+		miframe = frame;
 		setBounds(new Rectangle(10, 11, 563, 384));
 		this.miConexion = miConexion;
 		setLayout(null);
@@ -72,14 +75,14 @@ public class PanelMultiPlayer extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Cliente cliente = new Cliente(serverAddress.getText(),clientePassword.getText(),lblClienteOnline);
 				try {
-					cliente.conectarAlServidor();
+					cliente.conectarAlServidor(miframe);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
-		btnConectarAPartida.setBounds(12, 189, 186, 25);
+		btnConectarAPartida.setBounds(10, 165, 186, 25);
 		panelCliente.add(btnConectarAPartida);
 		
 		JLabel lblEstado_1 = new JLabel("Estado");
@@ -92,6 +95,15 @@ public class PanelMultiPlayer extends JPanel {
 		lblClienteOnline.setForeground(Color.RED);
 		lblClienteOnline.setBounds(80, 144, 56, 16);
 		panelCliente.add(lblClienteOnline);
+		
+		JButton btnNewButton_1 = new JButton("Desconectar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+			}
+		});
+		btnNewButton_1.setBounds(12, 193, 186, 23);
+		panelCliente.add(btnNewButton_1);
 		
 		JPanel panelServidor = new JPanel();
 		panelServidor.setBackground(Color.GRAY);
@@ -114,11 +126,11 @@ public class PanelMultiPlayer extends JPanel {
 		JButton btnCrearPartidaOnline = new JButton("Crear Partida Online");
 		btnCrearPartidaOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Thread servidor = new Thread( new Servidor(serverPassword.getText(), lblOnline));
+				Thread servidor = new Thread( new Servidor(serverPassword.getText(), lblOnline, miframe));
 				servidor.start();
 			}
 		});
-		btnCrearPartidaOnline.setBounds(12, 189, 180, 25);
+		btnCrearPartidaOnline.setBounds(12, 165, 180, 25);
 		panelServidor.add(btnCrearPartidaOnline);
 		
 		JLabel lblEstado = new JLabel("Estado");
@@ -132,6 +144,10 @@ public class PanelMultiPlayer extends JPanel {
 		lblOnline.setBackground(Color.RED);
 		lblOnline.setBounds(80, 107, 61, 16);
 		panelServidor.add(lblOnline);
+		
+		JButton btnNewButton = new JButton("Parar Servidor");
+		btnNewButton.setBounds(12, 193, 180, 23);
+		panelServidor.add(btnNewButton);
 
 	}
 }

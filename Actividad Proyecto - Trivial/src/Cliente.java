@@ -21,13 +21,14 @@ public class Cliente {
 	private ObjectInputStream entrada; // flujo de entrada del servidor
 	private PanelPreguntas objetoPreguntas; //objeto preguntas
 	private JLabel lblClienteOnline; //etiqueta saber si esta online
+	private Principal miframe;
 	
 	public Cliente(String host, String password, JLabel lblClienteOnline) {
 		servidor = host;
 		this.lblClienteOnline=lblClienteOnline;// establece el servidor al que se conecta este cliente
 	}
 	
-	public void conectarAlServidor() throws IOException
+	public void conectarAlServidor(Principal frame) throws IOException
 	{  
 		System.out.println("Intentando realizar conexion\n");
 		// crea objeto Socket para hacer conexión con el servidor
@@ -35,8 +36,10 @@ public class Cliente {
 		System.out.println("Conectado a: "+ cliente.getInetAddress().getHostName() );
 		lblClienteOnline.setText("Online");
 		lblClienteOnline.setForeground(Color.GREEN);
+		miframe=frame;
+		miframe.lanzarPartidaMultiplayer();
 		try{
-			obtenerFlujos();
+			obtenerFlujos(miframe);
 
 		}catch(IOException exception){
 			System.out.println(exception);
@@ -44,7 +47,7 @@ public class Cliente {
 	}// fin del método conectarAlServidor
 	
 	// obtiene flujos para enviar y recibir datos
-	private void obtenerFlujos() throws IOException
+	private void obtenerFlujos(Principal miframe) throws IOException
 	{
 		// establece flujo de salida para los objetos
 		salida = new ObjectOutputStream( cliente.getOutputStream() );
@@ -54,6 +57,7 @@ public class Cliente {
 		entrada = new ObjectInputStream( cliente.getInputStream() );
 
 		System.out.println("\nSe obtuvieron los flujos de E/S\n");
+
 	}// fin del método obtenerFlujos
 	
 	// envía un mensaje al servidor
