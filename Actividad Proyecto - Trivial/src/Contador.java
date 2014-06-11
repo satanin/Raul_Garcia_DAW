@@ -15,6 +15,7 @@ public class Contador implements Runnable {
 	private PanelPreguntas pPreguntas2;
 	private PanelPreguntasOnline pPreguntasOnline;
 	private ConexionBBDD miConexion;
+	private boolean partidaOnline=false;
 	
 	/*Desde esta clase vamos a controlar el contador del juego, un thread que al llegar a
 	 * cero dará la partida por finalizada. En primer lugar inicializamos en el constructor
@@ -35,6 +36,7 @@ public class Contador implements Runnable {
 		this.p=p;
 		pPreguntasOnline = pPreguntas;
 		this.miConexion=pPreguntasOnline.getConexion();
+		partidaOnline = true;
 	}
 	
 	//Codigo del contador para que haga la cuenta atrás
@@ -50,12 +52,22 @@ public class Contador implements Runnable {
             	 * Además, repitamos la pantalla de inicio una vez concluido el juego para que el
             	 * jugador vuelva a jugar una nueva partida si lo desea */
                 public void run() {
-                    try {                  	
-                        FinDePartida frame = new FinDePartida(pPreguntas2);
-                        frame.setVisible(true);
-                        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        Principal.getPrincipal().remove(Principal.getPrincipal().miPanelPreguntas);
-                        Principal.getPrincipal().repaint();
+                    try {         
+                    	if(partidaOnline){
+                    		FinDePartida frame = new FinDePartida(pPreguntasOnline);
+                            frame.setVisible(true);
+                            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                            Principal.getPrincipal().remove(Principal.getPrincipal().miPanelPreguntas);
+                            Principal.getPrincipal().repaint();
+                    	}else {
+                    		FinDePartida frame = new FinDePartida(pPreguntas2);
+                            frame.setVisible(true);
+                            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                            Principal.getPrincipal().remove(Principal.getPrincipal().miPanelPreguntas);
+                            Principal.getPrincipal().repaint();
+                    	}
+                        
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
