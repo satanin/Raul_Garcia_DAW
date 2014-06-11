@@ -53,6 +53,7 @@ public class Cliente {
 		// establece flujo de salida para los objetos
 		salida = new ObjectOutputStream( cliente.getOutputStream() );
 		salida.writeChars(miframe.getUser());
+		System.out.println("Enviando al Servidor: "+miframe.getUser());
 		salida.flush();// vacía el búfer de salida para enviar información de encabezado
 
 		// establece flujo de entrada para los objetos

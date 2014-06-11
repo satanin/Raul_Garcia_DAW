@@ -87,7 +87,7 @@ public class Servidor implements Runnable{
 		// establece el flujo de entrada para los objetos
 		entrada = new ObjectInputStream( conexion.getInputStream() );
 		System.out.println("\nSe obtuvieron los flujos de E/S\n");
-		misPreguntasOnline.setClientUser(entrada.readUTF());
+		misPreguntasOnline.setClientUser(entrada.toString());
 		miframe.lanzarPartidaMultiplayer(misPreguntasOnline);
 	}// fin del método obtenerFlujos
 	
