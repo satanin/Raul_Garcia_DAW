@@ -294,9 +294,6 @@ public class Principal extends JFrame {
 	}
 	
 	public void lanzarPartidaMultiplayer(Preguntas misPreguntasOnline){
-		if(misPreguntasOnline.getClientUser()==""){
-		misPreguntasOnline.setClientUser(getUser());
-		}
 		System.out.println("Ahora se debería lanzar el nuevo panel multijugador");	
 		miPanelPreguntasOnline = new PanelPreguntasOnline(misPreguntasOnline, miConexion);
 		miPanelPreguntasOnline.setBounds(10, 11, 563, 384);

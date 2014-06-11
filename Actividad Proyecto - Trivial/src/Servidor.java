@@ -79,16 +79,16 @@ public class Servidor implements Runnable{
 	
 	// obtiene flujos para enviar y recibir datos
 	private void obtenerFlujos() throws IOException{
+
 		// establece el flujo de salida para los objetos
 		salida = new ObjectOutputStream( conexion.getOutputStream() );
 		salida.flush();// vacía el búfer de salida para enviar información del encabezado
-		enviarDatos(misPreguntasOnline);
+	
 
 		// establece el flujo de entrada para los objetos
 		entrada = new ObjectInputStream( conexion.getInputStream() );
 		System.out.println("\nSe obtuvieron los flujos de E/S\n");
-		misPreguntasOnline.setClientUser(entrada.toString());
-		miframe.lanzarPartidaMultiplayer(misPreguntasOnline);
+
 	}// fin del método obtenerFlujos
 	
 	// procesa la conexión con el cliente
@@ -103,6 +103,10 @@ public class Servidor implements Runnable{
 				{
 					mensaje = ( String ) entrada.readObject(); // lee el nuevo mensaje
 //					this.cliente.setText("\n"+ mensaje); // muestra el mensaje
+					System.out.println(mensaje);
+					misPreguntasOnline.setClientUser(mensaje);
+					enviarDatos(misPreguntasOnline);
+					miframe.lanzarPartidaMultiplayer(misPreguntasOnline);
 				}// fin de try
 				catch( ClassNotFoundException excepcionClaseNoEncontrada ) 
 				{
@@ -116,7 +120,7 @@ public class Servidor implements Runnable{
 	{
 		try// envía objeto al cliente
 		{
-			salida.writeObject(misPreguntasOnline );
+			salida.writeObject(misPreguntasOnline);
 			salida.flush();// envía toda la salida al cliente
 			System.out.println("Se han enviado las preguntas al cliente");
 		}// fin de try

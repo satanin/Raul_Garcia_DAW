@@ -52,7 +52,7 @@ public class Cliente {
 	{
 		// establece flujo de salida para los objetos
 		salida = new ObjectOutputStream( cliente.getOutputStream() );
-		salida.writeChars(miframe.getUser());
+		salida.writeObject(miframe.getUser());
 		System.out.println("Enviando al Servidor: "+miframe.getUser());
 		salida.flush();// vacía el búfer de salida para enviar información de encabezado
 
@@ -72,15 +72,12 @@ public class Cliente {
 	}// fin del método obtenerFlujos
 	
 	// envía un mensaje al servidor
-	public void enviarDatos( ArrayList <Pregunta> misPreguntas )
-	{
+	public void enviarDatos(){
 		try// envía un objeto al servidor
-		{
-			objetoPreguntas.preguntasAleatorias(misPreguntas);
-			
-			salida.writeObject("CLIENTE>>> "+ objetoPreguntas.preguntasAleatorias(misPreguntas) );
+		{	
+			salida.writeObject("CLIENTE>>> ");
 			salida.flush();// envía todos los datos a la salida
-			System.out.println("\nCLIENTE>>> "+ objetoPreguntas.preguntasAleatorias(misPreguntas) );
+			System.out.println("\nCLIENTE>>> ");
 		}// fin de try
 		catch( IOException excepcionES )
 		{
