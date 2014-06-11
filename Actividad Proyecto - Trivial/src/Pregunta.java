@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -5,7 +6,7 @@ import java.util.Random;
  * las Id de las preguntas, las repuestas, las preguntas así como las
  * respuestas válidas*/
 
-public class Pregunta {
+public class Pregunta implements Serializable{
 	
 	private String pregunta;
 	private String respuesta1;

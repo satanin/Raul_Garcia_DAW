@@ -38,7 +38,7 @@ public class PanelPreguntas extends JPanel {
 	//Pasamos por el constructor la BBDD y el usuario para poder usarlor
 	public PanelPreguntas(ConexionBBDD miConexion, String usuario) {
 		this.usuario = usuario;
-//		this.panelPreguntas=this;
+		this.panelPreguntas=this;
 		setBounds(new Rectangle(10, 11, 563, 384));
 		setBackground(Color.GRAY);
 		setLayout(null);

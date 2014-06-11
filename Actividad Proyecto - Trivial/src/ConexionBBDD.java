@@ -63,7 +63,6 @@ public class ConexionBBDD {
 			    questions.setIdPregunta(manejarResultados.getInt("idPregunta"));
 			    misPreguntas.add(questions);
 			    //System.out.println("Obtenidas : "+misPreguntas.size()+" Preguntas y Respuestas");
-			    
 			}
 			preguntasAleatorias(misPreguntas);
 			

@@ -13,6 +13,7 @@ public class Contador implements Runnable {
 	private FinDePartida finalPartida;
 	private Principal p;
 	private PanelPreguntas pPreguntas2;
+	private PanelPreguntasOnline pPreguntasOnline;
 	private ConexionBBDD miConexion;
 	
 	/*Desde esta clase vamos a controlar el contador del juego, un thread que al llegar a
@@ -26,6 +27,14 @@ public class Contador implements Runnable {
 		this.p=p;
 		pPreguntas2 = pPreguntas;
 		this.miConexion=pPreguntas2.getConexion();
+	}
+	
+	public Contador(JLabel contar, Principal p, PanelPreguntasOnline pPreguntas){
+		nombreTarea = "Contador";
+		this.contar=contar;	
+		this.p=p;
+		pPreguntasOnline = pPreguntas;
+		this.miConexion=pPreguntasOnline.getConexion();
 	}
 	
 	//Codigo del contador para que haga la cuenta atrás

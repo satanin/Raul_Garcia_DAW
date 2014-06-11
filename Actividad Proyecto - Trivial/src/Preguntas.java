@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Preguntas {
+public class Preguntas implements Serializable{
 	private ArrayList<Pregunta> misPreguntasOnline;
 	private String serverUser,clientUser;
 

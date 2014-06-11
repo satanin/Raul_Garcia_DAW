@@ -23,14 +23,14 @@ public class Servidor implements Runnable{
 	private JLabel lblOnline;
 	private Principal miframe;
 	private Preguntas misPreguntasOnline;
-	private ArrayList<Pregunta> misPreguntas;
+	private ArrayList<Pregunta> misPreguntas = new ArrayList<Pregunta>();
 	
 	public Servidor(String password, JLabel lblOnline, Principal frame, ConexionBBDD miConexion){
 		serverPass=password;
 		this.lblOnline = lblOnline;
 		miframe = frame;
 		miConexion.leerPreguntas(misPreguntas);
-		Preguntas misPreguntasOnline = new Preguntas(misPreguntas,frame.getUser());
+		misPreguntasOnline = new Preguntas(misPreguntas,frame.getUser());
 	}
 	
 	public void run()

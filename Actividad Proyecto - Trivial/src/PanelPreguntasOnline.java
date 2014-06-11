@@ -31,7 +31,7 @@ public class PanelPreguntasOnline extends JPanel {
 	private JLabel labelResultado;
 	private int puntos = 0;
 	private JLabel labelPuntos;
-	private PanelPreguntas panelPreguntas;
+	private PanelPreguntasOnline panelPreguntasOnline;
 	private Random aleatorio;
 	private String usuario;
 	private JLabel lblNewLabel;
@@ -41,6 +41,7 @@ public class PanelPreguntasOnline extends JPanel {
 	public PanelPreguntasOnline(Preguntas misPreguntasOnline) {
 		setBounds(new Rectangle(10, 11, 563, 384));
 		setLayout(null);
+		this.panelPreguntasOnline = this;
 		this.usuario = misPreguntasOnline.getServerUser();
 		setBounds(new Rectangle(10, 11, 563, 384));
 		setBackground(Color.GRAY);
@@ -112,7 +113,7 @@ public class PanelPreguntasOnline extends JPanel {
 		add(labelContador);
 		
 		//Creamos un objeto tread para que aparezca el contador en el panel
-		Thread miContador = new Thread( new Contador(labelContador,Principal.getPrincipal(), this.panelPreguntas));
+		Thread miContador = new Thread( new Contador(labelContador,Principal.getPrincipal(), this.panelPreguntasOnline));
 		miContador.start();
 		
 		//Inicializamos el array de las preguntas y la conexion	
