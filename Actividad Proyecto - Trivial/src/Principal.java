@@ -41,7 +41,8 @@ public class Principal extends JFrame {
 	private Contador miContador;
 	private JLabel lblUserLogged,labelError;
 	public PanelPreguntas miPanelPreguntas;
-	private JPanel contentPane,panelPrincipal,miPanelMultiPlayer,panelLogin, miPanelPreguntasOnline;
+	public PanelPreguntasOnline miPanelPreguntasOnline;
+	private JPanel contentPane,panelPrincipal,miPanelMultiPlayer,panelLogin;
 	private ConexionBBDD miConexion;
 	private PanelComoJugar miPanelComoJugar;
 	private Creditos misCreditos;

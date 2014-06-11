@@ -57,7 +57,7 @@ public class Contador implements Runnable {
                     		FinDePartida frame = new FinDePartida(pPreguntasOnline);
                             frame.setVisible(true);
                             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                            Principal.getPrincipal().remove(Principal.getPrincipal().miPanelPreguntas);
+                            Principal.getPrincipal().remove(Principal.getPrincipal().miPanelPreguntasOnline);
                             Principal.getPrincipal().repaint();
                     	}else {
                     		FinDePartida frame = new FinDePartida(pPreguntas2);
