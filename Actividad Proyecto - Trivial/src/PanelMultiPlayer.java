@@ -2,6 +2,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 import java.awt.Font;
+import java.awt.Rectangle;
 
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
@@ -28,6 +29,7 @@ public class PanelMultiPlayer extends JPanel {
 
 	//Pasamos BBDD por el constructor
 	public PanelMultiPlayer(ConexionBBDD miConexion) {
+		setBounds(new Rectangle(10, 11, 563, 384));
 		this.miConexion = miConexion;
 		setLayout(null);
 		

@@ -63,7 +63,7 @@ public class Servidor implements Runnable{
 		lblOnline.setText("Online");
 		lblOnline.setForeground(Color.GREEN);
 		conexion = servidor.accept(); // permite al servidor aceptar la conexión
-
+		
 		System.out.println("Conexion "+ contador +" recibida de: "+
 		conexion.getInetAddress().getHostName() );
 	}// fin del método esperarConexion

@@ -203,7 +203,7 @@ public class Principal extends JFrame {
 		/*Evento en el que capturamos el usuario y contraseña que introduce el jugador
 		 * y que si es correcto nos muestra el nombre del usuario que se ha registrado
 		 */
-		JButton btnLogin = new JButton("Login2");
+		JButton btnLogin = new JButton("Login");
 		btnLogin.setBounds(31, 166, 75, 25);
 		panelLogin.add(btnLogin);
 		btnLogin.addActionListener(new ActionListener() {
@@ -246,7 +246,7 @@ public class Principal extends JFrame {
 		topScores.setBounds(294, 95, 230, 256);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(273, 107, 289, 244);
+		scrollPane.setBounds(273, 107, 280, 244);
 		scrollPane.add(topScores);
 
 		
